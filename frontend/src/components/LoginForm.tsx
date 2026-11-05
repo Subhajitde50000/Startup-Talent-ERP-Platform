@@ -634,10 +634,12 @@ export function LoginForm() {
         </div>
       )}
 
-      <StatePreviewBar
+      {process.env.NODE_ENV === 'development' ? (
+        <StatePreviewBar
         activeScenario={activeScenario}
         onSelectScenario={applyPreviewScenario}
       />
+      ) : null}
     </>
   );
 }

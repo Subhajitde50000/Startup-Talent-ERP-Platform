@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -145,9 +145,18 @@ export function StartupShell({ children }: { children: React.ReactNode }) {
     data.stages.find((s) => s.id === data.startup.currentStage) ||
     data.stages[0];
 
-  const activeNavItem = ALL_STARTUP_NAV_ITEMS.find((item) => pathname === item.href) ||
-    [...ALL_STARTUP_NAV_ITEMS].filter((item) => pathname.startsWith(`${item.href}/`)).sort((a, b) => b.href.length - a.href.length)[0] ||
-    ALL_STARTUP_NAV_ITEMS.find((item) => item.id === 'roadmap' && pathname.startsWith('/startup/stage/'));
+  const activeNavItem = useMemo(
+    () =>
+      ALL_STARTUP_NAV_ITEMS.find((item) => pathname === item.href) ||
+      [...ALL_STARTUP_NAV_ITEMS]
+        .filter((item) => pathname.startsWith(`${item.href}/`))
+        .sort((a, b) => b.href.length - a.href.length)[0] ||
+      ALL_STARTUP_NAV_ITEMS.find(
+        (item) => item.id === 'roadmap' && pathname.startsWith('/startup/stage/')
+      ),
+    [pathname]
+  );
+
   const stageSlug = pathname.startsWith('/startup/stage/') ? pathname.split('/').pop() : undefined;
   const stageBreadcrumb = stageSlug ? data.stages.find((stage) => stage.id === stageSlug)?.label : undefined;
   const currentBreadcrumb =
@@ -190,7 +199,9 @@ export function StartupShell({ children }: { children: React.ReactNode }) {
           <div key={group.id} className={styles.navGroup}>
             <span className={styles.navGroupLabel}>{group.label}</span>
             {group.items.map((item) => {
-              const isActive = activeNavItem?.id === item.id || (item.id === 'roadmap' && pathname.startsWith('/startup/stage/'));
+              const isActive =
+                activeNavItem?.id === item.id ||
+                (item.id === 'roadmap' && pathname.startsWith('/startup/stage/'));
               const isStageRecommended =
                 item.recommendedStage === data.startup.currentStage;
 
@@ -205,7 +216,10 @@ export function StartupShell({ children }: { children: React.ReactNode }) {
                 >
                   {getNavIcon(item.id)}
                   <span>{item.label}</span>
-                  {isStageRecommended && !isActive && (
+                  {item.status === 'coming-soon' && (
+                    <span className={styles.comingSoonBadge}>Soon</span>
+                  )}
+                  {item.status !== 'coming-soon' && isStageRecommended && !isActive && (
                     <span
                       className={styles.stageHint}
                       title={`Recommended for ${currentStageDef.label} stage`}
@@ -274,13 +288,13 @@ export function StartupShell({ children }: { children: React.ReactNode }) {
               <Menu size={18} strokeWidth={1.5} aria-hidden="true" />
             </button>
 
-            <div className={styles.breadcrumbs} aria-label="Breadcrumb">
+            <nav className={styles.breadcrumbs} aria-label="Breadcrumbs">
               <span>Startup Workspace</span>
               <span aria-hidden="true">/</span>
               <span className={styles.breadcrumbCurrent}>
                 {currentBreadcrumb}
               </span>
-            </div>
+            </nav>
           </div>
 
           <div className={styles.topBarRight}>
@@ -345,3 +359,4 @@ export function StartupShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+export default StartupShell;

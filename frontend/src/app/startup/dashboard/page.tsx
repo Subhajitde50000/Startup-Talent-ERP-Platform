@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowRight, Bell, BriefcaseBusiness, Check, CheckSquare2, CircleHelp,
   FileText, FolderOpen, Gauge, Plus, Search, ShieldCheck, UserRoundPlus,
   Users, Eye, LockKeyhole,
 } from 'lucide-react';
 import { useStartupWorkspace } from '@/context/StartupWorkspaceContext';
+import { useStartupNotifications } from '@/context/StartupNotificationContext';
 import { KpiStatCard } from '@/components/startup/dashboard/KpiStatCard';
 import { StageJourneyCard } from '@/components/startup/dashboard/StageJourneyCard';
 import { TasksMilestonesCard } from '@/components/startup/dashboard/TasksMilestonesCard';
@@ -26,7 +28,22 @@ export default function StartupDashboardPage() {
     addTeamMember, addDocument, requestMentorSession,
   } = useStartupWorkspace();
   const [activeAction, setActiveAction] = useState<QuickActionType>(null);
+  const router = useRouter();
+  const { unreadCount } = useStartupNotifications();
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [investorVisible, setInvestorVisible] = useState(false);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
   const founderFirstName = data.startup.founderName.trim().split(/\s+/)[0] || 'Founder';
   const activeStage = data.stages.find((stage) => stage.id === data.startup.currentStage) || data.stages[0];
   const stageIndex = Math.max(0, data.stages.findIndex((stage) => stage.id === activeStage.id));
@@ -53,12 +70,15 @@ export default function StartupDashboardPage() {
         <div className={styles.dashboardHeaderTools}>
           <label className={styles.searchBox}>
             <Search size={16} aria-hidden="true" />
-            <input aria-label="Search workspace" placeholder="Search workspace" />
+            <input ref={searchInputRef} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && searchQuery.trim()) { router.push(`/startup/tasks?q=${encodeURIComponent(searchQuery.trim())}`); } }} aria-label="Search workspace" placeholder="Search workspace" />
             <kbd>⌘ K</kbd>
           </label>
-          <button className={styles.notificationButton} type="button" aria-label="Notifications">
-            <Bell size={17} aria-hidden="true" /><span className={styles.unreadDot} />
+          <Link className={styles.notificationButton} href="/startup/notifications" aria-label={unreadCount ? `Notifications, ${unreadCount} unread` : 'Notifications'}>
+            <Bell size={17} aria-hidden="true" />{unreadCount > 0 && <span className={styles.unreadDot} />}
+          </Link>
+          {/*
           </button>
+          */}
           <button type="button" className={styles.primaryActionBtn} onClick={() => setActiveAction('task')}>
             <Plus size={16} aria-hidden="true" /> New task
           </button>
@@ -90,7 +110,7 @@ export default function StartupDashboardPage() {
 
       <section id="dashboard-main" className={styles.kpiGrid} aria-label="Workspace overview">
         <KpiStatCard label="Stage criteria" value={`${completedCriteria}/${activeStage.exitCriteria.length}`} unit="met" caption={`${activeStage.label} stage checklist`} icon={<Gauge size={16} />} href="/startup/roadmap" linkLabel="View" />
-        <KpiStatCard label="Open tasks" value={openTasks.length} unit={overdueTasks.length ? `${overdueTasks.length} overdue` : 'in progress'} caption={`${completedTasks} completed in workspace`} icon={<CheckSquare2 size={16} />} href="/startup/projects" linkLabel="Tasks" />
+        <KpiStatCard label="Open tasks" value={openTasks.length} unit={overdueTasks.length ? `${overdueTasks.length} overdue` : 'in progress'} caption={`${completedTasks} completed in workspace`} icon={<CheckSquare2 size={16} />} href="/startup/tasks" linkLabel="Tasks" />
         <KpiStatCard label="Core team" value={data.team.length} unit="members" caption={`${ownerCount} founders & admins`} icon={<Users size={16} />} href="/startup/team" linkLabel="Team" />
         <KpiStatCard label="Data room" value={data.documents.length} unit="files" caption="Documents added to workspace" icon={<FolderOpen size={16} />} href="/startup/data-room" linkLabel="Open" />
       </section>

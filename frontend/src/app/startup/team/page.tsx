@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useStartupWorkspace } from '@/context/StartupWorkspaceContext';
 import { StartupTeamMember } from '@/types/startup';
+import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
 import styles from './StartupTeam.module.css';
 
 type AccessRole = StartupTeamMember['permission'];
@@ -46,6 +47,7 @@ export default function StartupTeamPage() {
   const [drawerMember, setDrawerMember] = useState<StartupTeamMember | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [confirmAction, setConfirmAction] = useState<{ kind: 'remove' | 'deactivate' | 'revoke'; row: TeamRow } | null>(null);
+  const [bulkDeactivateTargets, setBulkDeactivateTargets] = useState<StartupTeamMember[] | null>(null);
   const [toast, setToast] = useState<{ text: string; undo?: () => void } | null>(null);
   const [inviteError, setInviteError] = useState('');
   const [loadedInvites, setLoadedInvites] = useState(false);
@@ -136,11 +138,20 @@ export default function StartupTeamPage() {
     const protectedOwnerId = currentRole === 'Admin' || selectedOwners.length >= ownerCount ? selectedOwners[0]?.id : undefined;
     const targets = selectedRows.filter((member) => member.permission !== 'Owner' || (currentRole === 'Owner' && member.id !== protectedOwnerId));
     if (!targets.length) { showToast('A startup needs at least one active Owner, and Admins cannot deactivate Owners.'); return; }
-    if (window.confirm(`Deactivate access for ${targets.length} selected member${targets.length === 1 ? '' : 's'}?`)) {
-      targets.forEach((member) => updateTeamMember(member.id, { status: 'Deactivated' }));
-      setSelected([]); showToast(`${targets.length} member${targets.length === 1 ? '' : 's'} deactivated.`);
+    setBulkDeactivateTargets(targets);
+  };
+  const executeBulkDeactivate = () => {
+    if (!bulkDeactivateTargets) return;
+    bulkDeactivateTargets.forEach((member) => updateTeamMember(member.id, { status: 'Deactivated' }));
+    setSelected([]); showToast(`${bulkDeactivateTargets.length} member${bulkDeactivateTargets.length === 1 ? '' : 's'} deactivated.`);
+    setBulkDeactivateTargets(null);
+  };
+  /* unused */
+  /*
+  
     }
   };
+  */
   const finishConfirm = () => {
     if (!confirmAction) return;
     const { kind, row } = confirmAction;
@@ -225,6 +236,7 @@ export default function StartupTeamPage() {
     {drawerMember && <MemberDrawer member={drawerMember} currentRole={currentRole} currentUserName={data.startup.founderName} taskCount={data.tasks.filter((task) => task.owner === drawerMember.name).length} documentCount={data.documents.length} onClose={() => setDrawerMember(null)} onMessage={() => showToast('Messaging is not connected in this demo.')} onUpdate={(updates) => { updateTeamMember(drawerMember.id, updates); setDrawerMember((member) => member ? { ...member, ...updates } : null); }} onRoleChange={(role) => { if (updateRole(drawerMember, role)) setDrawerMember((member) => member ? { ...member, permission: role } : null); }} onDeactivate={() => { setConfirmAction({ kind: 'deactivate', row: rows.find((row) => row.member?.id === drawerMember.id)! }); setDrawerMember(null); }} />}
     {toast && <div className={styles.toast} role="status"><CheckCircle2Icon /><span>{toast.text}</span>{toast.undo && <button type="button" onClick={() => { toast.undo?.(); setToast(null); }}>Undo</button>}<button className={styles.toastClose} type="button" onClick={() => setToast(null)} aria-label="Dismiss"><X size={14} /></button></div>}
     {canManage && <button className={styles.mobileInvite} type="button" onClick={() => setInviteOpen(true)}><Plus size={17} /> Invite member</button>}
+    <ConfirmDialog isOpen={Boolean(bulkDeactivateTargets)} title="Deactivate selected members?" description={`Deactivate access for ${bulkDeactivateTargets?.length || 0} selected member${bulkDeactivateTargets?.length === 1 ? '' : 's'}? Their workspace access will be suspended.`} confirmLabel="Deactivate members" isDanger onConfirm={executeBulkDeactivate} onCancel={() => setBulkDeactivateTargets(null)} />
   </div>;
 }
 

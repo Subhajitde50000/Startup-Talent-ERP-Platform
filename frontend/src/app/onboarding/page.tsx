@@ -133,8 +133,8 @@ function OnboardingContent() {
   const [activeRole, setActiveRole] = useState<OnboardingRole>(
     queryRole || 'Startup'
   );
-  const [userName, setUserName] = useState('Claire Chen');
-  const [userEmail, setUserEmail] = useState('claire@northstar.bio');
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
 
   // 1. Startup state

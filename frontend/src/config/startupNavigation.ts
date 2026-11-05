@@ -7,6 +7,7 @@ export interface StartupNavItem {
   href: string;
   description: string;
   recommendedStage?: StartupStageId;
+  status?: 'active' | 'coming-soon';
 }
 
 export interface StartupNavGroup {

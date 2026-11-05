@@ -4,11 +4,12 @@ import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight, BriefcaseBusiness, Check, CheckCircle2, ChevronDown, CircleHelp,
-  FileText, Globe2, ImagePlus, Info, LockKeyhole, Mail, MapPin, MessageSquare,
+  Eye, FileText, Globe2, ImagePlus, Info, LockKeyhole, Mail, MapPin, MessageSquare,
   Pencil, Plus, Save, Shield, ShieldCheck, Users, X,
 } from 'lucide-react';
 import { useStartupWorkspace } from '@/context/StartupWorkspaceContext';
 import { STARTUP_PROFILE_DRAFT_KEY, STARTUP_PROFILE_KEY } from '@/lib/startupProfileStorage';
+import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
 import styles from './StartupProfile.module.css';
 
 type Visibility = 'private' | 'mentors' | 'mentors-investors';
@@ -63,6 +64,7 @@ export default function StartupProfilePage() {
   const [notice, setNotice] = useState('');
   const [saveState, setSaveState] = useState('Saved to this browser');
   const [logoError, setLogoError] = useState('');
+  const [showDiscardConfirm, setShowDiscardConfirm] = useState(false);
 
   const dirty = useMemo(() => JSON.stringify(form) !== JSON.stringify(saved), [form, saved]);
 
@@ -87,7 +89,7 @@ export default function StartupProfilePage() {
     const timer = window.setTimeout(() => {
       try { localStorage.setItem(STARTUP_PROFILE_DRAFT_KEY, JSON.stringify(form)); setSaveState('Draft autosaved'); }
       catch { setSaveState('Draft could not be saved'); }
-    }, 30000);
+    }, 2000);
     return () => window.clearTimeout(timer);
   }, [form, dirty, hydrated]);
 
@@ -117,8 +119,11 @@ export default function StartupProfilePage() {
     catch { setNotice('Could not save profile in this browser.'); }
   };
   const discardChanges = () => {
-    if (dirty && !window.confirm('Discard your unsaved profile changes?')) return;
-    setForm(saved); localStorage.removeItem(STARTUP_PROFILE_DRAFT_KEY); setSaveState('Saved on this device'); setNotice('Changes discarded.');
+    if (dirty) { setShowDiscardConfirm(true); return; }
+    applyDiscard();
+  };
+  const applyDiscard = () => {
+    setForm(saved); localStorage.removeItem(STARTUP_PROFILE_DRAFT_KEY); setSaveState('Saved on this device'); setNotice('Changes discarded.'); setShowDiscardConfirm(false);
   };
   const handleLogo = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; if (!file) return;
@@ -243,7 +248,8 @@ export default function StartupProfilePage() {
     <div className={styles.disclaimer}>The platform introduces parties and is not a broker or adviser.</div>
     {notice && <div className={styles.toast} role="status"><CheckCircle2 size={16} />{notice}<button type="button" onClick={() => setNotice('')} aria-label="Dismiss notification"><X size={14} /></button></div>}
     {view === 'edit' && dirty && <div className={styles.mobileSaveBar}><span>Unsaved changes</span><button type="button" onClick={discardChanges} className={styles.discardButton}>Discard</button><button type="button" onClick={saveChanges} className={styles.primaryButton}><Save size={14} /> Save</button></div>}
+    <ConfirmDialog isOpen={showDiscardConfirm} title="Discard unsaved changes?" description="Are you sure you want to discard your unsaved profile modifications? This action cannot be undone." confirmLabel="Discard changes" isDanger onConfirm={applyDiscard} onCancel={() => setShowDiscardConfirm(false)} />
   </div>;
 }
 
-function EyeIcon() { return <Globe2 size={14} aria-hidden="true" />; }
+function EyeIcon() { return <Eye size={14} aria-hidden="true" />; }
