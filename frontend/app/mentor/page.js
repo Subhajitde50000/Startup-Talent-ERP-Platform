@@ -1,1 +1,5 @@
-import MentorCore from './mentor-core';export default function Page(){return <MentorCore page="dashboard"/>}
+import { redirect } from 'next/navigation';
+
+export default function MentorRootPage() {
+  redirect('/mentor/dashboard');
+}

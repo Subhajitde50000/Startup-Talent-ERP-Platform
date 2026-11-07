@@ -1,6 +1,9 @@
 export { default as StartupShell } from './startup-shell';
 export { default as StartupSidebar, STARTUP_NAV_ITEMS } from './startup-sidebar';
 export { default as StartupHeader } from './startup-header';
+export { default as MentorShell } from './mentor-shell';
+export { default as MentorSidebar, MENTOR_NAV_ITEMS } from './mentor-sidebar';
+export { default as MentorHeader } from './mentor-header';
 export { default as PageHeader } from './page-header';
 export { default as SubNavTabs } from './sub-nav-tabs';
 export { default as MetricStatStrip } from './metric-stat-strip';
