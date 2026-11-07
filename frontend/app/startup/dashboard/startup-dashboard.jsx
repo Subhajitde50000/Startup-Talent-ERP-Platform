@@ -1,11 +1,11 @@
 'use client';
 import {useState} from 'react';
 import Link from 'next/link';
-import { StartupSidebar, Card, Button } from '../../../components';
+import { StartupSidebar, StartupHeader, Card, Button } from '../../../components';
 import {
-  LayoutDashboard,ListTodo,Lightbulb,Briefcase,Users,Settings,CircleHelp,Search,Bell,ChevronDown,ChevronRight,Check,Plus,ArrowUpRight,CalendarDays,
-  Clock,MoreHorizontal,FileText,Presentation,FileSpreadsheet,Menu,X,Eye,EyeOff,LockKeyhole,
-  CheckCircle2,MessageCircle,Building2,ArrowRight,LogOut,Moon,Sun
+  LayoutDashboard,ListTodo,Lightbulb,Briefcase,Users,Settings,CircleHelp,ChevronRight,Check,Plus,ArrowUpRight,CalendarDays,
+  Clock,MoreHorizontal,FileText,Presentation,FileSpreadsheet,Menu,Eye,EyeOff,LockKeyhole,
+  CheckCircle2,MessageCircle,Building2,ArrowRight
 } from 'lucide-react';
 
 const initialTasks = [
@@ -24,7 +24,6 @@ export default function StartupDashboard() {
   const [stage, setStage] = useState('Prototype');
   const [toast, setToast] = useState('');
   const [search, setSearch] = useState('');
-  const [profile, setProfile] = useState(false);
   const [checked, setChecked] = useState([true, true, false, true, false, false]);
 
   const stages = ['Idea', 'Prototype', 'Early revenue', 'Mature'];
@@ -60,67 +59,18 @@ export default function StartupDashboard() {
         onAction={showToast}
       />
 
-      {/* Header */}
-      <header className={`sticky top-0 z-20 flex h-[68px] items-center justify-between border-b border-[#E5E1D8] bg-[#FAF8F4]/95 px-4 backdrop-blur sm:px-7 ${compact ? 'lg:ml-[76px]' : 'lg:ml-[240px]'}`}>
-        <div className="flex items-center gap-3">
-          <button type="button" className="lg:hidden" onClick={() => setMobile(!mobile)} aria-label="Open menu">
-            {mobile ? <X /> : <Menu />}
-          </button>
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-3 top-2.5 text-[#A0A7B4]" size={17} />
-            <input
-              aria-label="Search workspace"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search anything…"
-              className="h-10 w-64 rounded-lg border border-[#E5E1D8] bg-white pl-9 pr-3 text-sm outline-none focus:border-[#B8955A]"
-            />
-          </div>
-          <button type="button" onClick={() => showToast('Acme Studio is your active startup.')} className="flex items-center gap-2 rounded-lg border border-[#E5E1D8] bg-white px-3 py-2 text-sm font-medium">
-            <span className="grid h-6 w-6 place-items-center rounded bg-[#F3EBDD] text-[11px] font-bold">A</span>
-            <span className="hidden sm:block">Acme Studio</span>
-            <ChevronDown size={14} />
-          </button>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            onClick={() => setDarkmode(!darkmode)}
-            aria-label={darkmode ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={darkmode ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="grid h-10 w-10 place-items-center rounded-full transition hover:bg-white/70"
-          >
-            {darkmode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-          <button type="button" onClick={() => showToast('You’re all caught up.')} aria-label="Notifications" className="relative grid h-10 w-10 place-items-center rounded-full hover:bg-white">
-            <Bell size={19} />
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#B8955A] ring-2 ring-[#FAF8F4]" />
-          </button>
-          <div className="relative">
-            <button type="button" onClick={() => setProfile(!profile)} className="flex items-center gap-2 rounded-lg p-1.5 hover:bg-white">
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-ink text-xs font-semibold text-white">AK</span>
-              <span className="hidden text-left sm:block">
-                <b className="block text-xs">Aarav Kapoor</b>
-                <small className="text-[#4A5568]">Founder</small>
-              </span>
-              <ChevronDown size={14} />
-            </button>
-            {profile && (
-              <div className="absolute right-0 top-12 w-48 rounded-xl border border-[#E5E1D8] bg-white p-2 shadow-lg">
-                <button type="button" onClick={() => showToast('Account settings opened.')} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]">
-                  <Settings size={16} />Account settings
-                </button>
-                <button type="button" onClick={() => showToast('Role switcher: Founder · Mentor.')} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]">
-                  <Users size={16} />Switch role
-                </button>
-                <button type="button" onClick={() => showToast('You are signed in as Aarav.')} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]">
-                  <LogOut size={16} />Sign out
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+      <StartupHeader
+        compact={compact}
+        onToggleMobile={() => setMobile(!mobile)}
+        onAction={showToast}
+        searchValue={search}
+        onSearchChange={e => setSearch(e.target.value)}
+        searchPlaceholder="Search anything…"
+        showThemeToggle
+        darkmode={darkmode}
+        onToggleTheme={() => setDarkmode(!darkmode)}
+        showProfileMenu
+      />
 
       {/* Main Content */}
       <main id="main" className={`mx-auto max-w-[1440px] px-4 pb-24 pt-7 sm:px-7 lg:px-8 lg:pb-10 ${compact ? 'lg:ml-[76px]' : 'lg:ml-[240px]'}`}>
