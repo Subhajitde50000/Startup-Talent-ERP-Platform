@@ -114,7 +114,7 @@ export default function MentorSidebar({
         {/* Primary Navigation Links */}
         <nav
           aria-label="Mentor primary navigation"
-          className="mt-4 flex-1 space-y-1 overflow-y-auto px-3"
+          className="mentor-sidebar-scrollbar mt-4 flex-1 space-y-1 overflow-y-auto px-3"
         >
           {MENTOR_NAV_ITEMS.map(([label, IconComponent, href]) => {
             const isActive = currentActive === label;
@@ -290,7 +290,7 @@ export default function MentorSidebar({
 
             <nav
               aria-label="Mobile mentor navigation"
-              className="flex-1 space-y-1 overflow-y-auto p-3"
+              className="mentor-sidebar-scrollbar flex-1 space-y-1 overflow-y-auto p-3"
             >
               {MENTOR_NAV_ITEMS.map(([label, IconComponent, href]) => {
                 const isActive = currentActive === label;
