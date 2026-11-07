@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { StartupSidebar, Btn, Card, SubNavTabs } from '../components';
+import { StartupSidebar, Btn, Card, SubNavTabs } from '../../../components';
 import {
   Search,
   Bell,

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { StartupSidebar, Btn, Card, SubNavTabs } from '../components';
+import { StartupSidebar, Btn, Card, SubNavTabs } from '../../../components';
 import {
   Search,
   Bell,

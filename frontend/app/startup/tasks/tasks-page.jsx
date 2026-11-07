@@ -1,7 +1,7 @@
 'use client';
 import {useMemo, useState} from 'react';
 import Link from 'next/link';
-import { StartupSidebar, Btn, Card } from '../components';
+import { StartupSidebar, Btn, Card } from '../../../components';
 import {
   Search,Bell,ChevronDown,ChevronRight,Check,Plus,ArrowRight,CalendarDays,
   Clock,MoreHorizontal,MessageCircle,Paperclip,Flag,Filter,Grid2X2,List,Columns3,Calendar,

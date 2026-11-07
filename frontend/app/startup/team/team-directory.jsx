@@ -1,7 +1,7 @@
 'use client';
 import {useMemo, useState} from 'react';
 import Link from 'next/link';
-import { StartupSidebar, Button, StatusBadge } from '../components';
+import { StartupSidebar, Button, StatusBadge } from '../../../components';
 import {
   Briefcase,Search,Bell,ChevronDown,Check,Plus,ArrowUpRight,ArrowRight,Mail,
   Building2,X,MoreHorizontal,RefreshCw,Trash2,Shield,Clock,Download,Grid2X2,List,

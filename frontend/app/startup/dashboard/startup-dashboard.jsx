@@ -1,7 +1,7 @@
 'use client';
 import {useState} from 'react';
 import Link from 'next/link';
-import { StartupSidebar, Card, Button } from '../components';
+import { StartupSidebar, Card, Button } from '../../../components';
 import {
   LayoutDashboard,ListTodo,Lightbulb,Briefcase,Users,Settings,CircleHelp,Search,Bell,ChevronDown,ChevronRight,Check,Plus,ArrowUpRight,CalendarDays,
   Clock,MoreHorizontal,FileText,Presentation,FileSpreadsheet,Menu,X,Eye,EyeOff,LockKeyhole,

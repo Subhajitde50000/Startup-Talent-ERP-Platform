@@ -1,7 +1,7 @@
 'use client';
 import {useState} from 'react';
 import Link from 'next/link';
-import { StartupSidebar, Card, Button } from '../components';
+import { StartupSidebar, Card, Button } from '../../../components';
 import {
   FolderLock,Users,Briefcase,Search,Bell,ChevronRight,Check,Lock,ArrowRight,ArrowUpRight,Plus,FileText,
   MessageCircle,CalendarDays,Clock,CheckCircle2,Upload,Play,Target,UsersRound,BarChart3,Kanban,
