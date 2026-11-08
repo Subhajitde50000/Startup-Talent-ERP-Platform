@@ -1,0 +1,284 @@
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  LayoutDashboard,
+  Search,
+  Bookmark,
+  FileSearch,
+  Inbox,
+  GitBranch,
+  FolderLock,
+  CalendarDays,
+  Handshake,
+  Wallet,
+  Briefcase,
+  Ticket,
+  ChartNoAxesColumn,
+  FileText,
+  Receipt,
+  MessageCircle,
+  Settings,
+  CircleHelp,
+  ChevronDown,
+  ChevronRight,
+  ArrowRight,
+  X,
+  Check,
+  Building2,
+} from 'lucide-react';
+
+export const INVESTOR_NAV_ITEMS = [
+  ['Dashboard', LayoutDashboard, '/investor/dashboard'],
+  ['Discover startups', Search, '/investor/discover'],
+  ['Shortlist', Bookmark, '/investor/shortlist'],
+  ['Saved searches', FileSearch, '/investor/searches'],
+  ['Intro requests', Inbox, '/investor/requests'],
+  ['Pipeline', GitBranch, '/investor/pipeline'],
+  ['Data rooms', FolderLock, '/investor/data-rooms'],
+  ['Meetings', CalendarDays, '/investor/meetings'],
+  ['Offers', Handshake, '/investor/offers'],
+  ['Commitments', Wallet, '/investor/commitments'],
+  ['Portfolio', Briefcase, '/investor/portfolio'],
+  ['Events', Ticket, '/investor/events'],
+  ['Insights', ChartNoAxesColumn, '/investor/insights'],
+  ['Activity', FileText, '/investor/activity'],
+  ['Billing', Receipt, '/investor/billing'],
+  ['Messages', MessageCircle, '/investor/messages'],
+];
+
+const ROLES = [
+  { name: 'Investor', path: '/investor/dashboard', desc: 'Dealflow & Portfolio', current: true },
+  { name: 'Startup Founder', path: '/startup/dashboard', desc: 'Forma Founder workspace' },
+  { name: 'Mentor', path: '/mentor/dashboard', desc: 'Advisory & Sessions' },
+  { name: 'Employer', path: '/employer/dashboard', desc: 'Talent & Hiring' },
+];
+
+export default function InvestorSidebar({
+  active,
+  compact = false,
+  setCompact,
+  mobileOpen = false,
+  setMobileOpen,
+  onAction,
+}) {
+  const pathname = usePathname();
+  const [localCompact, setLocalCompact] = useState(false);
+  const [roleMenuOpen, setRoleMenuOpen] = useState(false);
+
+  const isCompact = compact !== undefined ? compact : localCompact;
+  const handleToggleCompact = setCompact || setLocalCompact;
+
+  const getActiveFromPath = () => {
+    if (!pathname) return 'Dashboard';
+    if (pathname.startsWith('/investor/discover') || pathname.startsWith('/investor/startups')) return 'Discover startups';
+    if (pathname.startsWith('/investor/shortlist')) return 'Shortlist';
+    if (pathname.startsWith('/investor/searches')) return 'Saved searches';
+    if (pathname.startsWith('/investor/requests')) return 'Intro requests';
+    if (pathname.startsWith('/investor/pipeline') || pathname.startsWith('/investor/compare')) return 'Pipeline';
+    if (pathname.startsWith('/investor/data-rooms')) return 'Data rooms';
+    if (pathname.startsWith('/investor/meetings')) return 'Meetings';
+    if (pathname.startsWith('/investor/offers')) return 'Offers';
+    if (pathname.startsWith('/investor/commitments')) return 'Commitments';
+    if (pathname.startsWith('/investor/portfolio')) return 'Portfolio';
+    if (pathname.startsWith('/investor/events')) return 'Events';
+    if (pathname.startsWith('/investor/insights')) return 'Insights';
+    if (pathname.startsWith('/investor/activity')) return 'Activity';
+    if (pathname.startsWith('/investor/billing')) return 'Billing';
+    if (pathname.startsWith('/investor/messages')) return 'Messages';
+    if (pathname.startsWith('/investor/settings')) return 'Settings';
+    return 'Dashboard';
+  };
+
+  const currentActive = active || getActiveFromPath();
+
+  const handleAction = (msg) => {
+    if (onAction) onAction(msg);
+  };
+
+  const renderNavList = (onNavigate) => (
+    <nav className="investor-sidebar-scrollbar flex-1 space-y-1 overflow-y-auto px-3 py-2" aria-label="Investor navigation">
+      {INVESTOR_NAV_ITEMS.map(([name, Icon, href]) => {
+        const isCurrent = currentActive === name;
+        const hasBadge = name === 'Intro requests' || name === 'Messages';
+
+        return (
+          <Link
+            key={name}
+            href={href}
+            onClick={onNavigate}
+            title={isCompact ? name : undefined}
+            className={`group relative flex h-10 items-center gap-3 rounded-lg px-3 text-xs font-medium transition-colors ${
+              isCurrent
+                ? 'bg-[#1C2B42] text-white font-semibold'
+                : 'text-white/70 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            {isCurrent && (
+              <span className="absolute bottom-2 left-0 top-2 w-[3px] rounded-r bg-[#B8955A]" />
+            )}
+            <Icon size={17} className={`shrink-0 ${isCurrent ? 'text-[#B8955A]' : 'text-white/70 group-hover:text-white'}`} />
+            {!isCompact && <span className="truncate">{name}</span>}
+            {!isCompact && hasBadge && (
+              <span className="ml-auto rounded-full bg-[#B8955A] px-2 py-0.5 text-[10px] font-semibold text-ink">
+                3
+              </span>
+            )}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+
+  const renderFooter = (onNavigate) => (
+    <div className="mt-auto border-t border-white/10 p-3 space-y-1">
+      <Link
+        href="/investor/settings"
+        onClick={onNavigate}
+        className={`flex h-10 items-center gap-3 rounded-lg px-3 text-xs text-white/70 hover:bg-white/10 hover:text-white transition-colors ${
+          currentActive === 'Settings' ? 'bg-[#1C2B42] text-white font-semibold' : ''
+        }`}
+      >
+        <Settings size={17} />
+        {!isCompact && <span>Settings</span>}
+      </Link>
+
+      <button
+        type="button"
+        onClick={() => handleAction('Forma Investor Help center opened.')}
+        className="flex h-10 w-full items-center gap-3 rounded-lg px-3 text-left text-xs text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+      >
+        <CircleHelp size={17} />
+        {!isCompact && <span>Help & Support</span>}
+      </button>
+
+      {/* Role Switcher */}
+      <div className="relative pt-1">
+        <button
+          type="button"
+          onClick={() => setRoleMenuOpen(!roleMenuOpen)}
+          aria-expanded={roleMenuOpen}
+          aria-haspopup="true"
+          className="flex w-full items-center gap-2.5 rounded-lg border border-white/15 bg-white/5 p-2.5 text-left transition hover:bg-white/10"
+        >
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#F3EBDD] text-xs font-bold text-ink">
+            AM
+          </span>
+          {!isCompact && (
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-xs font-semibold text-white">Arjun Mehta</p>
+              <p className="text-[10px] text-white/60">Investor · Forma</p>
+            </div>
+          )}
+          {!isCompact && <ChevronDown size={14} className="text-white/60 shrink-0" />}
+        </button>
+
+        {roleMenuOpen && (
+          <div className="absolute bottom-full left-0 mb-2 w-64 rounded-xl border border-white/15 bg-[#1C2B42] p-2 text-white shadow-xl z-50">
+            <p className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/50">
+              Switch role
+            </p>
+            <div className="space-y-1">
+              {ROLES.map((r) => (
+                <Link
+                  key={r.name}
+                  href={r.path}
+                  onClick={() => {
+                    setRoleMenuOpen(false);
+                    if (onNavigate) onNavigate();
+                  }}
+                  className={`flex items-center justify-between rounded-lg p-2 text-xs transition ${
+                    r.current ? 'bg-white/15 font-semibold text-white' : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  <div>
+                    <p className="font-medium text-white">{r.name}</p>
+                    <p className="text-[10px] text-white/50">{r.desc}</p>
+                  </div>
+                  {r.current && <Check size={14} className="text-[#B8955A]" />}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-30 hidden flex-col bg-[#0F1B2D] text-white transition-all duration-200 lg:flex ${
+          isCompact ? 'w-[76px]' : 'w-[240px]'
+        }`}
+      >
+        {/* Brand Header */}
+        <div className="flex h-[68px] items-center justify-between border-b border-white/10 px-4">
+          <Link href="/investor/dashboard" className="flex items-center gap-2.5">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#B8955A] font-serif font-bold text-ink text-base">
+              F
+            </span>
+            {!isCompact && (
+              <div className="flex flex-col">
+                <span className="serif text-base font-semibold tracking-wide text-white">forma</span>
+                <span className="text-[9px] uppercase tracking-wider text-[#B8955A] font-medium">Investor</span>
+              </div>
+            )}
+          </Link>
+          <button
+            type="button"
+            onClick={() => handleToggleCompact(!isCompact)}
+            className="grid h-7 w-7 place-items-center rounded text-white/60 hover:bg-white/10 hover:text-white transition"
+            aria-label={isCompact ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {isCompact ? <ChevronRight size={16} /> : <ChevronDown size={16} className="-rotate-90" />}
+          </button>
+        </div>
+
+        {renderNavList()}
+        {renderFooter()}
+      </aside>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 flex lg:hidden">
+          <div
+            className="fixed inset-0 bg-ink/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className="relative flex w-full max-w-[280px] flex-col bg-[#0F1B2D] text-white shadow-2xl">
+            <div className="flex h-[68px] items-center justify-between border-b border-white/10 px-4">
+              <Link
+                href="/investor/dashboard"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2.5"
+              >
+                <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#B8955A] font-serif font-bold text-ink">
+                  F
+                </span>
+                <div>
+                  <span className="serif text-base font-semibold text-white">forma</span>
+                  <span className="block text-[9px] uppercase tracking-wider text-[#B8955A]">Investor</span>
+                </div>
+              </Link>
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                className="grid h-8 w-8 place-items-center rounded-lg text-white/70 hover:bg-white/10 hover:text-white"
+                aria-label="Close navigation drawer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {renderNavList(() => setMobileOpen(false))}
+            {renderFooter(() => setMobileOpen(false))}
+          </aside>
+        </div>
+      )}
+    </>
+  );
+}

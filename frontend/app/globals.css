@@ -22,3 +22,8 @@
 .mentor-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
 .mentor-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
 .mentor-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}
+.investor-sidebar-scrollbar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.investor-sidebar-scrollbar::-webkit-scrollbar{width:5px}
+.investor-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
+.investor-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
+.investor-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}

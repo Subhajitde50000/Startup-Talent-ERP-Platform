@@ -1,0 +1,441 @@
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import {
+  Settings,
+  Shield,
+  Bell,
+  Users,
+  LockKeyhole,
+  Check,
+  X,
+} from 'lucide-react';
+import { InvestorShell, Card, Button } from '@/components';
+import { InvestorDisclaimer } from '../investor-data';
+
+export default function InvestorSettingsPage() {
+  const [section, setSection] = useState('Account');
+  const [modal, setModal] = useState('');
+  const [inviteEmail, setInviteEmail] = useState('');
+
+  return (
+    <InvestorShell
+      active="Settings"
+      module="Deal flow"
+      title="Investor workspace settings"
+      description="Configure your investor account, security, organization members, notification digests and privacy."
+    >
+      {({ notify }) => (
+        <>
+          <div className="mb-6 rounded-lg bg-[#E7F3EC] p-3 text-xs text-[#286749] border border-[#C3E4D1] flex items-center justify-between">
+            <span>✓ Verified Institutional & Individual Investor Status: <b>Active & Compliant</b></span>
+            <span className="font-semibold text-xs">Full Access Level</span>
+          </div>
+
+          <div className="grid items-start gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+            {/* Settings Navigation Sidebar */}
+            <nav className="rounded-xl border border-[#E5E1D8] bg-white p-2 space-y-1">
+              {[
+                'Account',
+                'Security',
+                'Verification',
+                'Organization',
+                'Notifications',
+                'Privacy and visibility',
+                'Investing preferences',
+                'Data room defaults',
+                'Danger zone',
+              ].map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSection(s)}
+                  className={`block min-h-10 w-full rounded-lg px-3 text-left text-xs transition ${
+                    section === s
+                      ? 'bg-[#F3EBDD] font-semibold text-ink'
+                      : 'text-[#4A5568] hover:bg-[#FAF8F4] hover:text-ink'
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </nav>
+
+            {/* Settings Section Panel */}
+            <div className="space-y-6">
+              {section === 'Account' && (
+                <Card title="Personal & professional profile">
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      notify('Account profile details updated.');
+                    }}
+                    className="grid gap-4 sm:grid-cols-2"
+                  >
+                    <div>
+                      <label htmlFor="acc-name" className="block text-xs font-medium text-ink">
+                        Full legal name
+                      </label>
+                      <input
+                        id="acc-name"
+                        defaultValue="Arjun Mehta"
+                        className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] px-3 text-xs focus:border-ink focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="acc-email" className="block text-xs font-medium text-ink">
+                        Primary email
+                      </label>
+                      <input
+                        id="acc-email"
+                        type="email"
+                        defaultValue="arjun@formaventures.example"
+                        className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] px-3 text-xs focus:border-ink focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="acc-phone" className="block text-xs font-medium text-ink">
+                        Phone number
+                      </label>
+                      <input
+                        id="acc-phone"
+                        defaultValue="+91 98765 43210"
+                        className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] px-3 text-xs focus:border-ink focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="acc-tz" className="block text-xs font-medium text-ink">
+                        Time zone
+                      </label>
+                      <select
+                        id="acc-tz"
+                        className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] bg-white px-3 text-xs focus:border-ink focus:outline-none"
+                      >
+                        <option>Asia/Kolkata (IST · UTC+5:30)</option>
+                        <option>Asia/Singapore (SGT · UTC+8:00)</option>
+                        <option>Europe/London (GMT · UTC+0:00)</option>
+                      </select>
+                    </div>
+                    <div className="sm:col-span-2 pt-2">
+                      <Button type="submit">Save account profile</Button>
+                    </div>
+                  </form>
+                </Card>
+              )}
+
+              {section === 'Security' && (
+                <Card title="Security & authentication">
+                  <div className="space-y-4 text-xs">
+                    <div className="rounded-xl border border-[#E5E1D8] p-4 flex items-center justify-between">
+                      <div>
+                        <b className="text-ink">Two-Factor Authentication (2FA)</b>
+                        <span className="block text-[#4A5568]">Authenticator app (TOTP) enabled</span>
+                      </div>
+                      <span className="rounded-full bg-[#E7F3EC] px-2.5 py-0.5 font-semibold text-[#286749]">
+                        Enabled
+                      </span>
+                    </div>
+
+                    <div className="rounded-xl border border-[#E5E1D8] p-4 flex items-center justify-between">
+                      <div>
+                        <b className="text-ink">Active session</b>
+                        <span className="block text-[#4A5568]">Chrome on Windows 11 · Kolkata, India (Current device)</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => notify('Terminated all remote sessions.')}
+                        className="text-xs font-semibold text-[#B42318] hover:underline"
+                      >
+                        Sign out other devices
+                      </button>
+                    </div>
+                  </div>
+                </Card>
+              )}
+
+              {section === 'Verification' && (
+                <Card title="Investor compliance verification">
+                  <p className="text-xs text-ink leading-relaxed">
+                    Accredited investor documents on file · Verified on Aug 14, 2026. Annual re-certification scheduled for Aug 2027.
+                  </p>
+                  <Button
+                    secondary
+                    className="mt-4"
+                    onClick={() => notify('Investor certification documents displayed.')}
+                  >
+                    View accreditation records
+                  </Button>
+                </Card>
+              )}
+
+              {section === 'Organization' && (
+                <Card
+                  title="Team members & roles"
+                  action={
+                    <Button secondary onClick={() => setModal('invite-member')}>
+                      Invite colleague
+                    </Button>
+                  }
+                >
+                  <div className="space-y-3 text-xs">
+                    {[
+                      ['Arjun Mehta', 'Managing Partner (Owner)', 'arjun@formaventures.example'],
+                      ['Mira Shah', 'Partner · Full Diligence & Offer Authority', 'mira@formaventures.example'],
+                      ['Dev Patel', 'Associate · Diligence & Market Insights', 'dev@formaventures.example'],
+                    ].map(([name, role, email]) => (
+                      <div
+                        key={name}
+                        className="flex items-center justify-between border-b border-[#E5E1D8] pb-3 last:border-0 last:pb-0"
+                      >
+                        <div>
+                          <b className="text-ink">{name}</b>
+                          <span className="block text-[#4A5568]">{role}</span>
+                          <span className="text-[11px] text-[#806236]">{email}</span>
+                        </div>
+                        <span className="rounded bg-[#FAF8F4] px-2 py-1 text-xs text-[#4A5568]">
+                          Active
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              )}
+
+              {section === 'Notifications' && (
+                <Card title="Notification & digest preferences">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs text-left">
+                      <thead>
+                        <tr className="border-b border-[#E5E1D8] text-[#4A5568]">
+                          <th className="py-2.5">Category</th>
+                          <th className="py-2.5 text-center">In-app</th>
+                          <th className="py-2.5 text-center">Email</th>
+                          <th className="py-2.5 text-center">Push</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#E5E1D8]">
+                        {[
+                          'Suggested dealflow matches & saved searches',
+                          'Intro requests and founder replies',
+                          'Data room access & document uploads',
+                          'Diligence question responses',
+                          'Meeting invitations and schedule updates',
+                          'Offer counters and term sheet revisions',
+                          'Capital commitment & funds settlement',
+                          'Portfolio updates and reports',
+                        ].map((cat) => (
+                          <tr key={cat}>
+                            <td className="py-2.5 font-medium text-ink">{cat}</td>
+                            <td className="py-2.5 text-center">
+                              <input type="checkbox" defaultChecked className="accent-ink" />
+                            </td>
+                            <td className="py-2.5 text-center">
+                              <input type="checkbox" defaultChecked className="accent-ink" />
+                            </td>
+                            <td className="py-2.5 text-center">
+                              <input type="checkbox" className="accent-ink" />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <Button className="mt-4" onClick={() => notify('Notification preferences saved.')}>
+                    Save preferences
+                  </Button>
+                </Card>
+              )}
+
+              {section === 'Privacy and visibility' && (
+                <Card title="Profile visibility & discovery status">
+                  <div className="space-y-4 text-xs">
+                    <div>
+                      <label htmlFor="vis-select" className="block font-medium text-ink">
+                        Investor directory visibility
+                      </label>
+                      <select
+                        id="vis-select"
+                        className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] bg-white px-3 text-xs focus:border-ink focus:outline-none"
+                      >
+                        <option>Visible to startups I contact or who match my thesis</option>
+                        <option>Publicly discoverable by all verified startups</option>
+                        <option>Stealth mode (Hidden from discover directory)</option>
+                      </select>
+                    </div>
+                  </div>
+                </Card>
+              )}
+
+              {section === 'Investing preferences' && (
+                <Card title="Investment thesis & match criteria">
+                  <p className="text-xs text-[#4A5568] leading-relaxed">
+                    Manage preferred sectors, stages (Pre-seed, Seed, Series A), ticket ranges and instruments in your dealflow feed.
+                  </p>
+                  <Button
+                    className="mt-4"
+                    onClick={() => notify('Preferences saved.')}
+                  >
+                    Update criteria
+                  </Button>
+                </Card>
+              )}
+
+              {section === 'Data room defaults' && (
+                <Card title="Data room inspection preferences">
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      notify('Data room defaults updated.');
+                    }}
+                    className="space-y-4 text-xs"
+                  >
+                    <div>
+                      <label htmlFor="watermark-name" className="block font-medium text-ink">
+                        Watermark display string
+                      </label>
+                      <input
+                        id="watermark-name"
+                        defaultValue="Arjun Mehta · Forma Ventures"
+                        className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] px-3 text-xs focus:border-ink focus:outline-none"
+                      />
+                    </div>
+                    <Button type="submit">Save defaults</Button>
+                  </form>
+                </Card>
+              )}
+
+              {section === 'Danger zone' && (
+                <Card title="Danger zone">
+                  <p className="text-xs text-[#4A5568] leading-relaxed">
+                    Temporarily pause inbound founder requests or delete your investor account.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={() => notify('Inbound requests paused.')}
+                      className="rounded-lg border border-[#E5E1D8] px-4 py-2 text-xs font-semibold text-ink hover:bg-[#FAF8F4]"
+                    >
+                      Pause inbound requests
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setModal('delete-acc')}
+                      className="rounded-lg border border-red-200 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50"
+                    >
+                      Delete investor account
+                    </button>
+                  </div>
+                </Card>
+              )}
+            </div>
+          </div>
+
+          <InvestorDisclaimer onLearnMore={() => notify('Platform disclaimer opened.')} />
+
+          {/* Invite Member Modal */}
+          {modal === 'invite-member' && (
+            <div className="fixed inset-0 z-50 grid place-items-center bg-ink/50 p-4 backdrop-blur-sm">
+              <section
+                role="dialog"
+                aria-modal="true"
+                className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="serif text-xl font-bold text-ink">Invite team colleague</h2>
+                  <button type="button" onClick={() => setModal('')}>
+                    <X size={18} />
+                  </button>
+                </div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    notify(`Invitation sent to ${inviteEmail}.`);
+                    setModal('');
+                    setInviteEmail('');
+                  }}
+                  className="space-y-3"
+                >
+                  <div>
+                    <label htmlFor="inv-email" className="block text-xs font-medium text-ink">
+                      Colleague email address
+                    </label>
+                    <input
+                      id="inv-email"
+                      type="email"
+                      required
+                      value={inviteEmail}
+                      onChange={(e) => setInviteEmail(e.target.value)}
+                      placeholder="colleague@formaventures.example"
+                      className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] px-3 text-xs focus:border-ink focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="inv-role" className="block text-xs font-medium text-ink">
+                      Role
+                    </label>
+                    <select
+                      id="inv-role"
+                      className="mt-1 h-10 w-full rounded-lg border border-[#E5E1D8] bg-white px-3 text-xs focus:border-ink focus:outline-none"
+                    >
+                      <option>Associate (View & diligence only)</option>
+                      <option>Partner (Diligence & term sheet drafting)</option>
+                      <option>Admin (Full organization governance)</option>
+                    </select>
+                  </div>
+                  <div className="flex justify-end gap-2 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => setModal('')}
+                      className="rounded-lg border px-3 py-2 text-xs font-medium text-[#4A5568]"
+                    >
+                      Cancel
+                    </button>
+                    <Button type="submit">Send invitation</Button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          )}
+
+          {/* Delete Account Modal */}
+          {modal === 'delete-acc' && (
+            <div className="fixed inset-0 z-50 grid place-items-center bg-ink/50 p-4 backdrop-blur-sm">
+              <section
+                role="dialog"
+                aria-modal="true"
+                className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="serif text-xl font-bold text-ink">Delete account</h2>
+                  <button type="button" onClick={() => setModal('')}>
+                    <X size={18} />
+                  </button>
+                </div>
+                <p className="text-xs text-[#4A5568] leading-relaxed">
+                  Active capital commitments, executed NDA records and signed SAFE agreements must be resolved with startups prior to deleting your institutional account.
+                </p>
+                <div className="mt-6 flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setModal('')}
+                    className="rounded-lg border px-3 py-2 text-xs font-medium text-[#4A5568]"
+                  >
+                    Close
+                  </button>
+                  <Button
+                    onClick={() => {
+                      notify('Account deletion flow initiated with support review.');
+                      setModal('');
+                    }}
+                  >
+                    Request deletion
+                  </Button>
+                </div>
+              </section>
+            </div>
+          )}
+        </>
+      )}
+    </InvestorShell>
+  );
+}
