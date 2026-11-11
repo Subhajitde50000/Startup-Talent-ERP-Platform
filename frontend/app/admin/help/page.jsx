@@ -56,6 +56,31 @@ export default function AdminHelpPage() {
         </div>
       </div>
 
+      {/* Featured Admin User Manual Banner */}
+      <div className="rounded-xl border border-[#B8955A]/50 bg-gradient-to-r from-[#0F1B2D] to-[#1E293B] p-4 text-white mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#B8955A] text-[#0F1B2D]">
+            <Book size={20} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-serif font-bold text-white">Official Admin Portal User Manual (PDF & Interactive)</span>
+              <span className="rounded bg-[#B8955A]/30 border border-[#B8955A]/60 px-2 py-0.5 text-[10px] font-mono text-[#D4AF37]">v4.2.0-PROD</span>
+            </div>
+            <p className="text-xs text-[#CBD5E1] mt-0.5">
+              Comprehensive operational reference covering all 49 admin routes, 11 modules, 7 SOP workflows, and statutory DPDP/RBI guidelines.
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/admin/manual"
+          className="shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-[#B8955A] px-3.5 py-2 text-xs font-bold text-[#0F1B2D] hover:bg-[#D4AF37] transition shadow-xs"
+        >
+          <span>Open User Manual</span>
+          <ArrowRight size={13} />
+        </Link>
+      </div>
+
       {/* Quick Action Cards (Fixing ADMIN-ISSUE-010 dead links) */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-6">
         {quickLinks.map((ql) => {

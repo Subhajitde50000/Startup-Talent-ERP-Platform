@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { Search, Bell, ChevronDown, Menu, Settings, HelpCircle, LogOut, BookOpen } from 'lucide-react';
 
 export default function AdminHeader({
   compact = false,
@@ -44,6 +44,16 @@ export default function AdminHeader({
       </div>
 
       <div className="flex items-center gap-3">
+        <Link
+          href="/admin/manual"
+          title="Admin User Manual & Route Inventory"
+          className="hidden sm:flex items-center gap-1.5 rounded-lg border border-[#E5E1D8] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#0F1B2D] hover:border-[#B8955A] hover:text-[#B8955A] transition shadow-xs"
+        >
+          <BookOpen size={14} className="text-[#B8955A]" />
+          <span>Manual</span>
+          <span className="rounded bg-[#FAF8F4] px-1.5 py-0.5 text-[10px] font-mono text-[#64748B]">v4.2</span>
+        </Link>
+
         <button
           type="button"
           onClick={() => window.alert('You’re all caught up.')}
@@ -88,6 +98,13 @@ export default function AdminHeader({
                 className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]"
               >
                 <HelpCircle size={16} /> Admin Runbooks
+              </Link>
+              <Link
+                href="/admin/manual"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]"
+              >
+                <BookOpen size={16} className="text-[#B8955A]" /> User Manual (PDF)
               </Link>
               <Link
                 href="/admin/login"

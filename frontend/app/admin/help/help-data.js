@@ -24,6 +24,7 @@ export const helpTopics = [
 ];
 
 export const quickLinks = [
+  { label: 'Admin User Manual (PDF)', href: '/admin/manual', icon: Book, badge: 'v4.2.0' },
   { label: 'Active Incident Runbook', href: '/admin/system', icon: AlertTriangle, badge: 'INC-2026-021' },
   { label: 'Escalation Directory', href: '/admin/settings', icon: ShieldCheck, badge: 'All Teams' },
   { label: 'On-Call Telemetry', href: '/admin/system', icon: Phone, badge: 'Live SRE' },
@@ -31,6 +32,7 @@ export const quickLinks = [
 ];
 
 export const recentlyUpdated = [
+  { title: 'Admin Portal Operational User Manual v4.2.0 (49 Routes)', updated: 'Just now', author: 'Enterprise QA' },
   { title: 'Payment Webhook Latency Runbook', updated: '2 hours ago', author: 'SRE Lead' },
   { title: 'Startup Entity KYC Checklist v3.2', updated: '5 hours ago', author: 'Trust Team' },
   { title: 'Statutory DPDP Data Access Protocol', updated: '1 day ago', author: 'Compliance Officer' },

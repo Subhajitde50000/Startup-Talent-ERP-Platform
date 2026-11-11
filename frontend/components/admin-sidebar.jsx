@@ -31,6 +31,7 @@ import {
   Award,
   Sliders,
   Calendar,
+  BookOpen,
 } from 'lucide-react';
 
 export const ADMIN_NAV_SECTIONS = [
@@ -85,6 +86,7 @@ export const ADMIN_NAV_SECTIONS = [
   {
     category: 'Preferences',
     items: [
+      { name: 'Admin User Manual', icon: BookOpen, href: '/admin/manual', badge: 'v4.2' },
       { name: 'Settings & Security', icon: Settings, href: '/admin/settings' },
       { name: 'Help & Runbooks', icon: HelpCircle, href: '/admin/help' },
     ],
