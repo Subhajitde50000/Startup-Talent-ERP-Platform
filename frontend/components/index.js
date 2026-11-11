@@ -15,6 +15,40 @@ export { default as EmployerShell } from './employer-shell';
 export { default as EmployerSidebar, EMPLOYER_NAV_ITEMS } from './employer-sidebar';
 export { default as EmployerHeader } from './employer-header';
 export { EmployerBtn, EmployerCard, StageChip, SafetyStrip as EmployerSafetyStrip } from './employer-ui';
+export { default as AdminShell } from './admin-shell';
+export { default as AdminSidebar, ADMIN_NAV_ITEMS, ADMIN_NAV_SECTIONS } from './admin-sidebar';
+export { default as AdminHeader } from './admin-header';
+export {
+  INK,
+  INK_SOFT,
+  IVORY,
+  WHITE,
+  GOLD,
+  GOLD_DARK,
+  GOLD_TINT,
+  STONE_700,
+  STONE_400,
+  STONE_200,
+  SUCCESS,
+  WARNING,
+  ERROR,
+  INFO,
+  Card as AdminCard,
+  Btn as AdminBtn,
+  BtnIcon as AdminBtnIcon,
+  StatChip,
+  SectionHead,
+  EmptyState,
+  SkeletonCard,
+  ToggleSwitch,
+  DetailDrawer,
+  MetricCard,
+  TabBar,
+  RangeFilter,
+  ResponsiveTable,
+  user as adminUser,
+  toast as adminToast,
+} from './admin-ui';
 export { default as PageHeader } from './page-header';
 export { default as SubNavTabs } from './sub-nav-tabs';
 export { default as MetricStatStrip } from './metric-stat-strip';
