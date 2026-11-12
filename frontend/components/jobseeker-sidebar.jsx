@@ -21,6 +21,7 @@ import {
   ChevronRight,
   X,
   Check,
+  MessageSquare,
 } from 'lucide-react';
 
 export const JOBSEEKER_NAV_ITEMS = [
@@ -36,6 +37,7 @@ export const JOBSEEKER_NAV_ITEMS = [
   ['Interview practice', Mic, '/jobseeker/practice'],
   ['Readiness', Sparkles, '/jobseeker/readiness'],
   ['Messages', MessageCircle, '/jobseeker/messages'],
+  ['Community', MessageSquare, '/jobseeker/community'],
 ];
 
 const ROLES = [
@@ -74,6 +76,7 @@ export default function JobSeekerSidebar({
     if (pathname.startsWith('/jobseeker/practice')) return 'Interview practice';
     if (pathname.startsWith('/jobseeker/readiness')) return 'Readiness';
     if (pathname.startsWith('/jobseeker/messages')) return 'Messages';
+    if (pathname.startsWith('/jobseeker/community') || pathname.startsWith('/community')) return 'Community';
     if (pathname.startsWith('/jobseeker/settings')) return 'Settings';
     return 'Dashboard';
   };

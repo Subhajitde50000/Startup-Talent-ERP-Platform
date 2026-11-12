@@ -14,6 +14,9 @@ import {
   CircleHelp,
   Shield,
   FileText,
+  User,
+  MessageSquare,
+  LogOut,
 } from 'lucide-react';
 
 export default function EmployerHeader({
@@ -162,33 +165,57 @@ export default function EmployerHeader({
           </button>
 
           {profileOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-[#E5E1D8] bg-white p-2 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100">
-              <div className="px-3 py-2 border-b border-[#F0EBE0]">
-                <strong className="block text-xs text-[#0F1B2D]">Sarah Jenkins</strong>
-                <span className="text-[11px] text-[#6B7280]">sarah@northstarlabs.in</span>
+            <div className="absolute right-0 mt-2 w-60 rounded-2xl border border-[#E5E1D8] bg-white p-2 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100">
+              <div className="px-3 py-2 border-b border-[#F0EBE0] mb-1">
+                <div className="flex items-center gap-1.5">
+                  <strong className="block text-xs text-[#0F1B2D]">Sarah Jenkins</strong>
+                  <CheckCircle2 size={12} className="text-[#286749]" />
+                </div>
+                <span className="text-[11px] text-[#6B7280]">Northstar Labs · Head of People</span>
               </div>
               <div className="pt-1 text-xs space-y-0.5">
                 <Link
+                  href="/employer/profile"
+                  onClick={() => setProfileOpen(false)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+                >
+                  <User size={14} className="text-[#B8955A]" />
+                  <span>Company & Recruiter Profile</span>
+                </Link>
+                <Link
                   href="/employer/billing"
                   onClick={() => setProfileOpen(false)}
-                  className="block px-3 py-1.5 rounded-lg text-[#4A5568] hover:bg-[#FAF8F4] hover:text-[#0F1B2D]"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[#4A5568] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
                 >
-                  Plan & Invoices
+                  <FileText size={14} className="text-[#5A6E85]" />
+                  <span>Plan & Invoices</span>
                 </Link>
                 <Link
                   href="/employer/trust"
                   onClick={() => setProfileOpen(false)}
-                  className="block px-3 py-1.5 rounded-lg text-[#4A5568] hover:bg-[#FAF8F4] hover:text-[#0F1B2D]"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[#4A5568] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
                 >
-                  Verification & Trust
+                  <Shield size={14} className="text-[#5A6E85]" />
+                  <span>Verification & Trust</span>
                 </Link>
                 <Link
-                  href="/employer/activity"
+                  href="/employer/community"
                   onClick={() => setProfileOpen(false)}
-                  className="block px-3 py-1.5 rounded-lg text-[#4A5568] hover:bg-[#FAF8F4] hover:text-[#0F1B2D]"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[#4A5568] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
                 >
-                  Activity Audit Log
+                  <MessageSquare size={14} className="text-[#5A6E85]" />
+                  <span>Community Exchange</span>
                 </Link>
+                <div className="border-t border-[#F0EBE0] my-1 pt-1">
+                  <Link
+                    href="/login"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition"
+                  >
+                    <LogOut size={14} />
+                    <span>Sign out</span>
+                  </Link>
+                </div>
               </div>
             </div>
           )}

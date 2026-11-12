@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, Settings, Users, LogOut, Moon, Sun } from 'lucide-react';
+import { Search, Bell, ChevronDown, Menu, Settings, Users, LogOut, Moon, Sun, Building2, MessageSquare, User } from 'lucide-react';
 
 export default function StartupHeader({
   compact = false,
@@ -80,27 +80,69 @@ export default function StartupHeader({
             type="button"
             onClick={() => setProfileOpen(!profileOpen)}
             className="flex items-center gap-2 rounded-lg p-1 text-xs hover:bg-black/5"
+            aria-label="User account details"
+            aria-expanded={profileOpen}
           >
             <span className="grid h-8 w-8 place-items-center rounded-full bg-ink font-semibold text-white">
               AK
             </span>
             <span className="hidden text-left sm:block">
               <b className="block text-xs">Aarav Kapoor</b>
-              {showProfileMenu && <small className="text-[#4A5568]">Founder</small>}
+              <small className="text-[#4A5568]">Startup Founder</small>
             </span>
             <ChevronDown size={14} className="text-[#4A5568]" />
           </button>
-          {showProfileMenu && profileOpen && (
-            <div className="absolute right-0 top-12 z-30 w-48 rounded-xl border border-[#E5E1D8] bg-white p-2 shadow-lg">
-              <button type="button" onClick={() => notify('Account settings opened.')} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]">
-                <Settings size={16} />Account settings
+          {profileOpen && (
+            <div className="absolute right-0 top-12 z-30 w-56 rounded-xl border border-[#E5E1D8] bg-white p-2 text-[#0F1B2D] shadow-lg animate-in fade-in">
+              <div className="px-3 py-2 border-b border-[#F2EFE9] mb-1">
+                <p className="text-xs font-bold text-[#0F1B2D]">Aarav Kapoor</p>
+                <p className="text-[11px] text-[#5A6E85]">Founder & CEO • FinFlow</p>
+              </div>
+              <Link
+                href="/startup/user-profile"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <User size={15} className="text-[#B8955A]" />
+                <span>My Founder Profile</span>
+              </Link>
+              <Link
+                href="/startup/profile"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <Building2 size={15} className="text-[#5A6E85]" />
+                <span>Startup Company Profile</span>
+              </Link>
+              <Link
+                href="/startup/community"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <MessageSquare size={15} className="text-[#5A6E85]" />
+                <span>Community Discussion</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setProfileOpen(false);
+                  notify('Account settings opened.');
+                }}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition text-left"
+              >
+                <Settings size={15} className="text-[#5A6E85]" />
+                <span>Account Settings</span>
               </button>
-              <button type="button" onClick={() => notify('Role switcher: Founder · Mentor.')} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]">
-                <Users size={16} />Switch role
-              </button>
-              <button type="button" onClick={() => notify('You are signed in as Aarav.')} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]">
-                <LogOut size={16} />Sign out
-              </button>
+              <div className="border-t border-[#F2EFE9] my-1 pt-1">
+                <Link
+                  href="/login"
+                  onClick={() => setProfileOpen(false)}
+                  className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition"
+                >
+                  <LogOut size={15} />
+                  <span>Sign out</span>
+                </Link>
+              </div>
             </div>
           )}
         </div>

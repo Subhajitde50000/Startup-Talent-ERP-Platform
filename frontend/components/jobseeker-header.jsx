@@ -1,6 +1,7 @@
 'use client';
+import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu } from 'lucide-react';
+import { Search, Bell, ChevronDown, Menu, User, Sparkles, Mic, MessageSquare, Settings, LogOut, CheckCircle2 } from 'lucide-react';
 
 export default function JobSeekerHeader({
   compact = false,
@@ -9,6 +10,8 @@ export default function JobSeekerHeader({
   backHref,
   backLabel = '← Back',
 }) {
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const notify = (msg) => {
     if (onAction) onAction(msg);
   };
@@ -77,18 +80,88 @@ export default function JobSeekerHeader({
           <i className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#B8955A]" />
         </button>
 
-        <button
-          type="button"
-          onClick={() => notify('Signed in as Ananya Das (Product Designer).')}
-          className="flex items-center gap-2 rounded-lg p-1 text-xs hover:bg-black/5 transition"
-          aria-label="User account details"
-        >
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-ink font-semibold text-white">
-            AD
-          </span>
-          <span className="hidden sm:block font-medium text-ink">Ananya Das</span>
-          <ChevronDown size={14} className="text-[#4A5568]" />
-        </button>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="flex items-center gap-2 rounded-lg p-1 text-xs hover:bg-black/5 transition"
+            aria-label="User account details"
+            aria-expanded={profileOpen}
+          >
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-ink font-semibold text-white">
+              AD
+            </span>
+            <span className="hidden sm:block text-left">
+              <span className="block text-xs font-bold text-ink">Ananya Das</span>
+              <span className="block text-[10px] text-[#5A6E85]">Product Designer</span>
+            </span>
+            <ChevronDown size={14} className="text-[#4A5568]" />
+          </button>
+
+          {profileOpen && (
+            <div className="absolute right-0 top-12 z-30 w-56 rounded-xl border border-[#E5E1D8] bg-white p-2 text-[#0F1B2D] shadow-lg animate-in fade-in">
+              <div className="px-3 py-2 border-b border-[#F2EFE9] mb-1">
+                <div className="flex items-center gap-1.5">
+                  <p className="text-xs font-bold text-[#0F1B2D]">Ananya Das</p>
+                  <CheckCircle2 size={12} className="text-[#286749]" />
+                </div>
+                <p className="text-[11px] text-[#5A6E85]">Senior UI/UX & Frontend</p>
+              </div>
+
+              <Link
+                href="/jobseeker/profile"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <User size={15} className="text-[#B8955A]" />
+                <span>My Talent Profile & Resume</span>
+              </Link>
+              <Link
+                href="/jobseeker/readiness"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <Sparkles size={15} className="text-[#5A6E85]" />
+                <span>Job Readiness & AI Score</span>
+              </Link>
+              <Link
+                href="/jobseeker/practice"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <Mic size={15} className="text-[#5A6E85]" />
+                <span>Interview Practice Drills</span>
+              </Link>
+              <Link
+                href="/jobseeker/community"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <MessageSquare size={15} className="text-[#5A6E85]" />
+                <span>Talent Community Lounge</span>
+              </Link>
+              <Link
+                href="/jobseeker/settings"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <Settings size={15} className="text-[#5A6E85]" />
+                <span>Privacy & Job Preferences</span>
+              </Link>
+
+              <div className="border-t border-[#F2EFE9] my-1 pt-1">
+                <Link
+                  href="/login"
+                  onClick={() => setProfileOpen(false)}
+                  className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition"
+                >
+                  <LogOut size={15} />
+                  <span>Sign out</span>
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

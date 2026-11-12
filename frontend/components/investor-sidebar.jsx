@@ -27,6 +27,7 @@ import {
   X,
   Check,
   Building2,
+  MessageSquare,
 } from 'lucide-react';
 
 export const INVESTOR_NAV_ITEMS = [
@@ -46,6 +47,7 @@ export const INVESTOR_NAV_ITEMS = [
   ['Activity', FileText, '/investor/activity'],
   ['Billing', Receipt, '/investor/billing'],
   ['Messages', MessageCircle, '/investor/messages'],
+  ['Community', MessageSquare, '/investor/community'],
 ];
 
 const ROLES = [
@@ -87,6 +89,7 @@ export default function InvestorSidebar({
     if (pathname.startsWith('/investor/activity')) return 'Activity';
     if (pathname.startsWith('/investor/billing')) return 'Billing';
     if (pathname.startsWith('/investor/messages')) return 'Messages';
+    if (pathname.startsWith('/investor/community') || pathname.startsWith('/community')) return 'Community';
     if (pathname.startsWith('/investor/settings')) return 'Settings';
     return 'Dashboard';
   };

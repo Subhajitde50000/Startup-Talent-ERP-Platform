@@ -21,6 +21,7 @@ import {
   ChevronRight,
   X,
   Check,
+  MessageSquare,
 } from 'lucide-react';
 
 export const EMPLOYER_NAV_ITEMS = [
@@ -32,6 +33,7 @@ export const EMPLOYER_NAV_ITEMS = [
   ['Hires', Award, '/employer/hires'],
   ['Templates', FileText, '/employer/templates'],
   ['Analytics', BarChart3, '/employer/analytics'],
+  ['Community', MessageSquare, '/employer/community'],
   ['Trust & Safety', Shield, '/employer/trust'],
   ['Activity Log', Activity, '/employer/activity'],
   ['Billing & Plans', Banknote, '/employer/billing'],
@@ -78,6 +80,7 @@ export default function EmployerSidebar({
     if (pathname.startsWith('/employer/hires')) return 'Hires';
     if (pathname.startsWith('/employer/templates')) return 'Templates';
     if (pathname.startsWith('/employer/analytics')) return 'Analytics';
+    if (pathname.startsWith('/employer/community') || pathname.startsWith('/community')) return 'Community';
     if (pathname.startsWith('/employer/trust')) return 'Trust & Safety';
     if (pathname.startsWith('/employer/activity')) return 'Activity Log';
     if (pathname.startsWith('/employer/billing')) return 'Billing & Plans';

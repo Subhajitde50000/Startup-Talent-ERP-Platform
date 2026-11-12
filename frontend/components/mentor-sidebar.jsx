@@ -22,6 +22,7 @@ import {
   Briefcase,
   Building2,
   Check,
+  MessageSquare,
 } from 'lucide-react';
 
 export const MENTOR_NAV_ITEMS = [
@@ -36,6 +37,7 @@ export const MENTOR_NAV_ITEMS = [
   ['Impact & reviews', ChartNoAxesColumn, '/mentor/impact'],
   ['Investor events', CalendarDays, '/mentor/events'],
   ['Messages', MessageCircle, '/mentor/messages'],
+  ['Community', MessageSquare, '/mentor/community'],
 ];
 
 const ROLES = [
@@ -72,6 +74,7 @@ export default function MentorSidebar({
     if (pathname.startsWith('/mentor/impact')) return 'Impact & reviews';
     if (pathname.startsWith('/mentor/events')) return 'Investor events';
     if (pathname.startsWith('/mentor/messages')) return 'Messages';
+    if (pathname.startsWith('/mentor/community') || pathname.startsWith('/community')) return 'Community';
     if (pathname.startsWith('/mentor/settings')) return 'Settings';
     return 'Dashboard';
   };

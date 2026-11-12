@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, Settings, HelpCircle, LogOut, BookOpen } from 'lucide-react';
+import { Search, Bell, ChevronDown, Menu, Settings, HelpCircle, LogOut, BookOpen, User, ShieldCheck } from 'lucide-react';
 
 export default function AdminHeader({
   compact = false,
@@ -84,35 +84,51 @@ export default function AdminHeader({
           </button>
 
           {profileOpen && (
-            <div className="absolute right-0 top-12 z-30 w-52 rounded-xl border border-[#E5E1D8] bg-white p-2 text-[#0F1B2D] shadow-lg">
+            <div className="absolute right-0 top-12 z-30 w-56 rounded-xl border border-[#E5E1D8] bg-white p-2 text-[#0F1B2D] shadow-lg animate-in fade-in">
+              <div className="px-3 py-2 border-b border-[#F2EFE9] mb-1">
+                <div className="flex items-center gap-1.5">
+                  <b className="block text-xs text-[#0F1B2D]">Alex Kumar</b>
+                  <ShieldCheck size={12} className="text-[#B8955A]" />
+                </div>
+                <small className="text-[#4A5568]">Lead Platform Administrator</small>
+              </div>
+              <Link
+                href="/admin/profile"
+                onClick={() => setProfileOpen(false)}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
+              >
+                <User size={15} className="text-[#B8955A]" /> Administrator Profile
+              </Link>
               <Link
                 href="/admin/settings"
                 onClick={() => setProfileOpen(false)}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
               >
-                <Settings size={16} /> Security & Settings
+                <Settings size={15} className="text-[#5A6E85]" /> Security & Settings
               </Link>
               <Link
                 href="/admin/help"
                 onClick={() => setProfileOpen(false)}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
               >
-                <HelpCircle size={16} /> Admin Runbooks
+                <HelpCircle size={15} className="text-[#5A6E85]" /> Admin Runbooks
               </Link>
               <Link
                 href="/admin/manual"
                 onClick={() => setProfileOpen(false)}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[#FAF8F4]"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-[#0F1B2D] hover:bg-[#FAF8F4] transition"
               >
-                <BookOpen size={16} className="text-[#B8955A]" /> User Manual (PDF)
+                <BookOpen size={15} className="text-[#B8955A]" /> User Manual (PDF)
               </Link>
-              <Link
-                href="/admin/login"
-                onClick={() => setProfileOpen(false)}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-rose-600 hover:bg-rose-50"
-              >
-                <LogOut size={16} /> Sign out
-              </Link>
+              <div className="border-t border-[#F2EFE9] my-1 pt-1">
+                <Link
+                  href="/admin/login"
+                  onClick={() => setProfileOpen(false)}
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition"
+                >
+                  <LogOut size={15} /> Sign out
+                </Link>
+              </div>
             </div>
           )}
         </div>

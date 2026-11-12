@@ -18,6 +18,7 @@ import {
   ArrowRight,
   X,
   Building2,
+  MessageSquare,
 } from 'lucide-react';
 
 export const STARTUP_NAV_ITEMS = [
@@ -30,6 +31,7 @@ export const STARTUP_NAV_ITEMS = [
   ['Mentor', Lightbulb, '/startup/mentors'],
   ['Investors', Briefcase, '/startup/investors'],
   ['Hiring', Briefcase, '/startup/hiring'],
+  ['Community', MessageSquare, '/startup/community'],
   ['Analytics', ChartNoAxesColumn, '/startup/analytics'],
 ];
 
@@ -52,6 +54,7 @@ export default function StartupSidebar({
     if (pathname.startsWith('/startup/stage')) return 'Stage toolkit';
     if (pathname.startsWith('/startup/tasks')) return 'Tasks & milestones';
     if (pathname.startsWith('/startup/team')) return 'Team';
+    if (pathname.startsWith('/startup/user-profile') || pathname.startsWith('/startup/founder-profile')) return 'Founder Profile';
     if (pathname.startsWith('/startup/profile')) return 'Startup profile';
     if (pathname.startsWith('/startup/data-room')) return 'Documents';
     if (
@@ -70,6 +73,7 @@ export default function StartupSidebar({
       return 'Investors';
     }
     if (pathname.startsWith('/startup/hiring')) return 'Hiring';
+    if (pathname.startsWith('/startup/community') || pathname.startsWith('/community')) return 'Community';
     if (pathname.startsWith('/startup/analytics')) return 'Analytics';
     return 'Dashboard';
   };
@@ -117,7 +121,7 @@ export default function StartupSidebar({
         )}
 
         {/* Navigation Items */}
-        <nav className={`space-y-1 ${isCompact ? 'px-2 pt-4' : 'px-3'}`}>
+        <nav className={`startup-sidebar-scrollbar flex-1 overflow-y-auto space-y-1 ${isCompact ? 'px-2 pt-4' : 'px-3'}`}>
           {STARTUP_NAV_ITEMS.map(([label, Icon, url]) => {
             const isActive = label === currentActive;
             return (
@@ -190,8 +194,10 @@ export default function StartupSidebar({
           </button>
 
           {/* User Account Capsule */}
-          <div
-            className={`mt-2 flex items-center rounded-lg border border-white/10 ${
+          <Link
+            href="/startup/user-profile"
+            title="My Founder Profile"
+            className={`mt-2 flex items-center rounded-lg border border-white/10 hover:border-[#B8955A] hover:bg-white/5 transition ${
               isCompact ? 'justify-center p-2' : 'gap-3 p-3'
             }`}
           >
@@ -200,13 +206,13 @@ export default function StartupSidebar({
             </span>
             {!isCompact && (
               <div className="min-w-0 flex-1">
-                <b className="block truncate text-xs">Aarav Kapoor</b>
+                <b className="block truncate text-xs text-white">Aarav Kapoor</b>
                 <small className="block truncate text-[11px] text-white/50">
-                  Founder · Acme Studio
+                  Founder Personal Profile →
                 </small>
               </div>
             )}
-          </div>
+          </Link>
         </div>
       </aside>
 
@@ -239,7 +245,7 @@ export default function StartupSidebar({
             </div>
 
             {/* Mobile Nav Links */}
-            <nav className="flex-1 space-y-1 overflow-y-auto">
+            <nav className="startup-sidebar-scrollbar flex-1 space-y-1 overflow-y-auto">
               {STARTUP_NAV_ITEMS.map(([label, Icon, url]) => {
                 const isActive = label === currentActive;
                 return (
@@ -262,15 +268,19 @@ export default function StartupSidebar({
 
             {/* Mobile Footer */}
             <div className="border-t border-white/10 pt-4 mt-auto">
-              <div className="flex items-center gap-3 rounded-lg border border-white/10 p-2.5">
+              <Link
+                href="/startup/user-profile"
+                onClick={() => setMobileOpen && setMobileOpen(false)}
+                className="flex items-center gap-3 rounded-lg border border-white/10 p-2.5 hover:border-[#B8955A] hover:bg-white/5 transition"
+              >
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#F3EBDD] text-xs font-bold text-ink">
                   AK
                 </span>
                 <div className="min-w-0 flex-1">
-                  <b className="block truncate text-xs">Aarav Kapoor</b>
-                  <small className="block truncate text-[11px] text-white/50">Founder · Acme Studio</small>
+                  <b className="block truncate text-xs text-white">Aarav Kapoor</b>
+                  <small className="block truncate text-[11px] text-white/50">Founder Personal Profile →</small>
                 </div>
-              </div>
+              </Link>
             </div>
           </aside>
         </div>

@@ -32,6 +32,7 @@ import {
   Sliders,
   Calendar,
   BookOpen,
+  MessageSquare,
 } from 'lucide-react';
 
 export const ADMIN_NAV_SECTIONS = [
@@ -67,6 +68,7 @@ export const ADMIN_NAV_SECTIONS = [
   {
     category: 'Programs & Search',
     items: [
+      { name: 'Community Forum', icon: MessageSquare, href: '/admin/community' },
       { name: 'Grants & Incubators', icon: Award, href: '/admin/opportunities' },
       { name: 'Matching & Search', icon: Sliders, href: '/admin/matching' },
       { name: 'Events Management', icon: Calendar, href: '/admin/events' },
@@ -143,6 +145,7 @@ export default function AdminSidebar({
     if (pathname.startsWith('/admin/payouts')) return 'Payouts & Refunds';
     if (pathname.startsWith('/admin/compliance') || pathname.startsWith('/admin/data-requests')) return 'Compliance & DPDP';
     if (pathname.startsWith('/admin/audit')) return 'Audit Trail';
+    if (pathname.startsWith('/admin/community') || pathname.startsWith('/community')) return 'Community Forum';
     if (pathname.startsWith('/admin/opportunities')) return 'Grants & Incubators';
     if (pathname.startsWith('/admin/matching')) return 'Matching & Search';
     if (pathname.startsWith('/admin/events')) return 'Events Management';
