@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, Settings, Users, LogOut, Moon, Sun, Building2, MessageSquare, User } from 'lucide-react';
+import { Search, ChevronDown, Menu, Settings, Users, LogOut, Moon, Sun, Building2, MessageSquare, User } from 'lucide-react';
+import NotificationDropdown from './notification-dropdown';
 
 export default function StartupHeader({
   compact = false,
@@ -66,15 +67,7 @@ export default function StartupHeader({
             {darkmode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         )}
-        <button
-          type="button"
-          onClick={() => notify('You’re all caught up.')}
-          aria-label="Notifications"
-          className="relative grid h-10 w-10 place-items-center rounded-lg hover:bg-black/5"
-        >
-          <Bell size={19} />
-          <i className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#B8955A]" />
-        </button>
+        <NotificationDropdown role="startup" />
         <div className="relative">
           <button
             type="button"

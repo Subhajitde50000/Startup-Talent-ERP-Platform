@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, User, CalendarDays, Wallet, MessageSquare, Settings, LogOut, CheckCircle2 } from 'lucide-react';
+import { Search, ChevronDown, Menu, User, CalendarDays, Wallet, MessageSquare, Settings, LogOut, CheckCircle2 } from 'lucide-react';
+import NotificationDropdown from './notification-dropdown';
 
 export default function MentorHeader({
   compact = false,
@@ -57,15 +58,7 @@ export default function MentorHeader({
       </div>
 
       <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => notify('No new notifications.')}
-          aria-label="Notifications"
-          className="relative grid h-10 w-10 place-items-center rounded-lg hover:bg-black/5"
-        >
-          <Bell size={19} />
-          <i className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#B8955A]" />
-        </button>
+        <NotificationDropdown role="mentor" />
 
         <div className="relative">
           <button

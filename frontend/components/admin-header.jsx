@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, Settings, HelpCircle, LogOut, BookOpen, User, ShieldCheck } from 'lucide-react';
+import { Search, ChevronDown, Menu, Settings, HelpCircle, LogOut, BookOpen, User, ShieldCheck } from 'lucide-react';
+import NotificationDropdown from './notification-dropdown';
 
 export default function AdminHeader({
   compact = false,
@@ -54,15 +55,7 @@ export default function AdminHeader({
           <span className="rounded bg-[#FAF8F4] px-1.5 py-0.5 text-[10px] font-mono text-[#64748B]">v4.2</span>
         </Link>
 
-        <button
-          type="button"
-          onClick={() => window.alert('You’re all caught up.')}
-          aria-label="Notifications"
-          className="relative grid h-10 w-10 place-items-center rounded-lg transition hover:bg-black/5"
-        >
-          <Bell size={19} />
-          <i className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#B8955A]" />
-        </button>
+        <NotificationDropdown role="admin" />
 
         <div className="relative">
           <button

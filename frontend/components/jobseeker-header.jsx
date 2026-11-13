@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Bell, ChevronDown, Menu, User, Sparkles, Mic, MessageSquare, Settings, LogOut, CheckCircle2 } from 'lucide-react';
+import { Search, ChevronDown, Menu, User, Sparkles, Mic, MessageSquare, Settings, LogOut, CheckCircle2 } from 'lucide-react';
+import NotificationDropdown from './notification-dropdown';
 
 export default function JobSeekerHeader({
   compact = false,
@@ -70,15 +71,7 @@ export default function JobSeekerHeader({
           Job Ready · Score 88
         </Link>
 
-        <button
-          type="button"
-          onClick={() => notify('Notifications: 2 interview updates received.')}
-          aria-label="Notifications"
-          className="relative grid h-10 w-10 place-items-center rounded-lg hover:bg-black/5 transition"
-        >
-          <Bell size={19} />
-          <i className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#B8955A]" />
-        </button>
+        <NotificationDropdown role="jobseeker" />
 
         <div className="relative">
           <button

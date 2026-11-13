@@ -82,7 +82,7 @@ export const ADMIN_NAV_SECTIONS = [
       { name: 'System Health', icon: Monitor, href: '/admin/system' },
       { name: 'Integrations', icon: Share2, href: '/admin/integrations' },
       { name: 'Configuration', icon: Wrench, href: '/admin/config' },
-      { name: 'Notifications', icon: Bell, href: '/admin/notifications' },
+      { name: 'Notifications', icon: Bell, href: '/notifications?role=admin' },
     ],
   },
   {

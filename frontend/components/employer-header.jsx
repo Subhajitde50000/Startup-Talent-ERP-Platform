@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {
   Menu,
   Search,
-  Bell,
   CheckCircle2,
   ChevronDown,
   Briefcase,
@@ -18,6 +17,7 @@ import {
   MessageSquare,
   LogOut,
 } from 'lucide-react';
+import NotificationDropdown from './notification-dropdown';
 
 export default function EmployerHeader({
   compact = false,
@@ -110,44 +110,8 @@ export default function EmployerHeader({
           </button>
         </Link>
 
-        {/* Notifications Bell */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setNotifOpen(!notifOpen)}
-            className="relative grid h-9 w-9 place-items-center rounded-lg border border-[#E5E1D8] bg-white text-[#4A5568] hover:bg-[#F4F1EA] hover:text-[#0F1B2D]"
-            aria-label="Notifications"
-          >
-            <Bell size={17} />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#B8955A]" />
-          </button>
-
-          {notifOpen && (
-            <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-[#E5E1D8] bg-white p-3 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100">
-              <div className="flex items-center justify-between pb-2 border-b border-[#F0EBE0] px-1">
-                <span className="text-xs font-bold text-[#0F1B2D]">Hiring Notifications</span>
-                <Link
-                  href="/employer/activity"
-                  onClick={() => setNotifOpen(false)}
-                  className="text-[11px] text-[#9A7A45] hover:underline"
-                >
-                  View Activity
-                </Link>
-              </div>
-              <div className="divide-y divide-[#F0EBE0] mt-1">
-                {notifications.map((n) => (
-                  <div key={n.id} className="p-2 space-y-0.5 hover:bg-[#FAF8F4] rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-[#0F1B2D]">{n.title}</span>
-                      <span className="text-[10px] text-[#A0A7B4]">{n.time}</span>
-                    </div>
-                    <p className="text-[11px] text-[#6B7280] leading-snug">{n.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        {/* Notifications Dropdown */}
+        <NotificationDropdown role="employer" />
 
         {/* User Profile Avatar & Dropdown */}
         <div className="relative">

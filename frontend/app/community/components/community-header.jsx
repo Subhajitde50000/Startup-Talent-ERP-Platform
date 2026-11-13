@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Globe,
 } from 'lucide-react';
+import NotificationDropdown from '@/components/notification-dropdown';
 import { COMMUNITY_PERSONAS } from '../community-data';
 
 export default function CommunityHeader({
@@ -82,6 +83,9 @@ export default function CommunityHeader({
             <PlusCircle size={14} className="text-[#B8955A]" />
             <span className="hidden sm:inline">Start Post</span>
           </button>
+
+          {/* Notifications Dropdown */}
+          <NotificationDropdown role={activePersona?.roleKey || 'all'} />
 
           {/* Role Persona Switcher Dropdown */}
           <div className="relative">

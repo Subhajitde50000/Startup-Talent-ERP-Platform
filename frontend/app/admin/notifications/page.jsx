@@ -59,6 +59,13 @@ export default function AdminNotificationsPage({ initialTab = 'all' }) {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            href="/notifications?role=admin"
+            className="flex items-center gap-1.5 rounded-lg border border-[#B8955A] bg-[#B8955A]/10 px-3 py-1.5 text-xs font-semibold text-[#8C6D37] hover:bg-[#B8955A]/20 transition"
+          >
+            <Bell size={13} />
+            <span>Unified Hub</span>
+          </Link>
           <Btn small secondary icon={RefreshCcw} onClick={handleRefresh} title="Sync notifications">
             Sync
           </Btn>
