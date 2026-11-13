@@ -17,3 +17,28 @@
 .darkdash main section input:not([type=checkbox]),.darkdash main section select,.darkdash main section textarea{background-color:#0B1422!important;color:#F2EFE8!important;border-color:#26364D!important}
 .darkdash header button{color:#F2EFE8!important}.darkdash header input{background:#142033!important;color:#F2EFE8!important;border-color:#26364D!important}
 .darkdash nav{background:#142033!important;border-color:#26364D!important}
+.mentor-sidebar-scrollbar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.mentor-sidebar-scrollbar::-webkit-scrollbar{width:5px}
+.mentor-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
+.mentor-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
+.mentor-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}
+.investor-sidebar-scrollbar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.investor-sidebar-scrollbar::-webkit-scrollbar{width:5px}
+.investor-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
+.investor-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
+.investor-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}
+.jobseeker-sidebar-scrollbar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.jobseeker-sidebar-scrollbar::-webkit-scrollbar{width:5px}
+.jobseeker-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
+.jobseeker-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
+.jobseeker-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}
+.admin-sidebar-scrollbar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.admin-sidebar-scrollbar::-webkit-scrollbar{width:5px}
+.admin-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
+.admin-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
+.admin-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}
+.startup-sidebar-scrollbar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.startup-sidebar-scrollbar::-webkit-scrollbar{width:5px}
+.startup-sidebar-scrollbar::-webkit-scrollbar-track{background:transparent}
+.startup-sidebar-scrollbar::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.28)}
+.startup-sidebar-scrollbar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.48)}
