@@ -37,8 +37,8 @@ export default function CommunityFeed({
 
   return (
     <section className="space-y-4">
-      {/* Quick Compose Prompt Bar with 4 Intent Triggers */}
-      <div className="rounded-xl border border-[#E5E1D8] bg-white p-4 shadow-sm">
+      {/* Quick Compose Prompt Bar */}
+      <div className="rounded-xl border border-[#E5E1D8] bg-white p-3.5 shadow-xs">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0F1B2D] font-serif font-bold text-white text-xs">
             {activePersona.avatar}
@@ -47,45 +47,47 @@ export default function CommunityFeed({
             onClick={() => onOpenComposeWithType('Question')}
             className="flex-1 rounded-full border border-[#E5E1D8] bg-[#FAF8F4] px-4 py-2 text-left text-xs text-[#7B8CA3] hover:border-[#0F1B2D] hover:bg-white transition"
           >
-            Ask a question, share a milestone, or start a discussion...
+            Start a discussion, ask a question, or create a poll...
           </button>
         </div>
 
-        <div className="mt-3 flex items-center justify-between border-t border-[#F2EFE9] pt-2.5 text-xs text-[#5A6E85]">
+        <div className="mt-3 flex items-center justify-between border-t border-[#F2EFE9] pt-2 text-xs">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <button
+              onClick={() => onOpenComposeWithType('Question')}
+              className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-[#5A6E85] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
+            >
+              <HelpCircle size={14} className="text-amber-600" />
+              <span>Question</span>
+            </button>
+            <button
+              onClick={() => onOpenComposeWithType('Poll')}
+              className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-[#5A6E85] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
+            >
+              <Vote size={14} className="text-rose-600" />
+              <span>Poll</span>
+            </button>
+            <button
+              onClick={() => onOpenComposeWithType('Milestone')}
+              className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-[#5A6E85] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
+            >
+              <Sparkles size={14} className="text-purple-600" />
+              <span>Milestone</span>
+            </button>
+            <button
+              onClick={() => onOpenComposeWithType('Discussion')}
+              className="hidden sm:flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium text-[#5A6E85] hover:bg-[#FAF8F4] hover:text-[#0F1B2D] transition"
+            >
+              <MessageSquare size={14} className="text-indigo-600" />
+              <span>Discussion</span>
+            </button>
+          </div>
+
           <button
             onClick={() => onOpenComposeWithType('Question')}
-            className="flex items-center gap-1.5 hover:text-[#0F1B2D] transition py-1 font-medium"
+            className="rounded-lg bg-[#0F1B2D] px-3.5 py-1 text-xs font-bold text-white hover:bg-[#1C2B42] transition shadow-xs"
           >
-            <HelpCircle size={14} className="text-amber-600" />
-            <span>Ask Question</span>
-          </button>
-          <button
-            onClick={() => onOpenComposeWithType('Milestone')}
-            className="flex items-center gap-1.5 hover:text-[#0F1B2D] transition py-1 font-medium"
-          >
-            <Sparkles size={14} className="text-purple-600" />
-            <span>Share Milestone</span>
-          </button>
-          <button
-            onClick={() => onOpenComposeWithType('Looking for')}
-            className="flex items-center gap-1.5 hover:text-[#0F1B2D] transition py-1 font-medium"
-          >
-            <UserPlus size={14} className="text-blue-600" />
-            <span>Looking For</span>
-          </button>
-          <button
-            onClick={() => onOpenComposeWithType('Poll')}
-            className="flex items-center gap-1.5 hover:text-[#0F1B2D] transition py-1 font-medium"
-          >
-            <Vote size={14} className="text-rose-600" />
-            <span>Create Poll</span>
-          </button>
-          <button
-            onClick={() => onOpenComposeWithType('Resource')}
-            className="flex items-center gap-1.5 hover:text-[#0F1B2D] transition py-1 font-medium"
-          >
-            <BookOpen size={14} className="text-emerald-600" />
-            <span>Post Resource</span>
+            Post
           </button>
         </div>
       </div>

@@ -89,18 +89,18 @@ export default function CommunityHeader({
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="flex items-center gap-2 rounded-lg border border-[#E5E1D8] bg-[#FAF8F4] p-1.5 pr-2.5 text-xs text-[#0F1B2D] hover:border-[#0F1B2D] transition"
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0F1B2D] text-[11px] font-bold text-white">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0F1B2D] text-[11px] font-bold text-white shrink-0">
                 {activePersona.avatar}
-              </div>
-              <div className="hidden text-left sm:block">
-                <div className="flex items-center gap-1">
+              </span>
+              <span className="hidden text-left sm:block">
+                <span className="flex items-center gap-1">
                   <span className="font-bold text-[#0F1B2D] text-[11px]">{activePersona.name}</span>
                   {activePersona.verified && (
                     <CheckCircle2 size={11} className="text-[#B8955A]" />
                   )}
-                </div>
-                <p className="text-[10px] text-[#5A6E85]">{activePersona.role}</p>
-              </div>
+                </span>
+                <span className="block text-[10px] text-[#5A6E85]">{activePersona.role}</span>
+              </span>
               <ChevronDown size={13} className="text-[#7B8CA3]" />
             </button>
 
@@ -128,15 +128,15 @@ export default function CommunityHeader({
                             : 'text-[#0F1B2D] hover:bg-[#FAF8F4]'
                         }`}
                       >
-                        <div
+                        <span
                           className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
                             isSelected ? 'bg-[#B8955A] text-white' : 'bg-[#0F1B2D] text-white'
                           }`}
                         >
                           {persona.avatar}
-                        </div>
-                        <div className="truncate">
-                          <div className="flex items-center gap-1">
+                        </span>
+                        <span className="truncate">
+                          <span className="flex items-center gap-1">
                             <span className="truncate">{persona.name}</span>
                             {persona.verified && (
                               <CheckCircle2
@@ -144,7 +144,7 @@ export default function CommunityHeader({
                                 className={isSelected ? 'text-[#B8955A]' : 'text-[#B8955A]'}
                               />
                             )}
-                          </div>
+                          </span>
                           <span
                             className={`block truncate text-[10px] ${
                               isSelected ? 'text-[#D6D0C4]' : 'text-[#7B8CA3]'
@@ -152,7 +152,7 @@ export default function CommunityHeader({
                           >
                             {persona.role}
                           </span>
-                        </div>
+                        </span>
                       </button>
                     );
                   })}

@@ -141,13 +141,13 @@ export default function CommunitySidebar({
                 : 'text-[#0F1B2D] hover:bg-[#FAF8F4]'
             }`}
           >
-            <div className="flex items-center gap-2">
+            <span className="flex items-center gap-2">
               <Sparkles
                 size={14}
                 className={selectedSpaceSlug === 'all' ? 'text-[#B8955A]' : 'text-[#7B8CA3]'}
               />
               <span>All Open Feeds</span>
-            </div>
+            </span>
             <span
               className={`text-[10px] rounded-full px-1.5 py-0.5 ${
                 selectedSpaceSlug === 'all' ? 'bg-white/20 text-white' : 'text-[#7B8CA3]'
@@ -211,10 +211,10 @@ export default function CommunitySidebar({
                         : 'text-[#A0AEC0] hover:bg-red-50/50 cursor-pointer'
                     }`}
                   >
-                    <div className="flex items-center gap-2 truncate">
+                    <span className="flex items-center gap-2 truncate">
                       {!hasAccess && <Lock size={12} className="shrink-0 text-[#A0AEC0]" />}
                       <span className="truncate">{lounge.name}</span>
-                    </div>
+                    </span>
                     <span
                       className={`text-[9px] font-semibold uppercase px-1.5 py-0.5 rounded ${
                         hasAccess

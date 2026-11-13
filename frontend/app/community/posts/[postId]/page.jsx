@@ -20,8 +20,10 @@ import ConnectModal from '../../components/connect-modal';
 import ReportModal from '../../components/report-modal';
 import {
   COMMUNITY_PERSONAS,
+  INITIAL_POSTS,
   loadCommunityPosts,
   saveCommunityPosts,
+  normalizePost,
   normalizeComment,
 } from '../../community-data';
 
@@ -30,7 +32,7 @@ export default function SinglePostThreadPage() {
   const postId = params?.postId || 'post_gst_billing';
 
   const [activePersona, setActivePersona] = useState(COMMUNITY_PERSONAS[0]);
-  const [posts, setPosts] = useState(() => loadCommunityPosts());
+  const [posts, setPosts] = useState(() => INITIAL_POSTS.map(normalizePost));
   const [newAnswerText, setNewAnswerText] = useState('');
   const [toastMessage, setToastMessage] = useState('');
 

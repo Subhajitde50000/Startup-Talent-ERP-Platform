@@ -18,6 +18,8 @@ import ConnectModal from './components/connect-modal';
 import ReportModal from './components/report-modal';
 import {
   ROLE_COMMUNITY_CONFIG,
+  COMMUNITY_SPACES,
+  INITIAL_POSTS,
   getPersonaForRole,
   loadCommunityPosts,
   saveCommunityPosts,
@@ -46,9 +48,9 @@ export default function CommunityShell({
   // Active Persona State
   const [activePersona, setActivePersona] = useState(() => getPersonaForRole(role));
 
-  // Posts, Spaces & RSVPs with LocalStorage persistence
-  const [posts, setPosts] = useState(() => loadCommunityPosts());
-  const [spaces, setSpaces] = useState(() => loadCommunitySpaces());
+  // Posts, Spaces & RSVPs - initialized deterministically to match SSR
+  const [posts, setPosts] = useState(() => INITIAL_POSTS.map(normalizePost));
+  const [spaces, setSpaces] = useState(() => COMMUNITY_SPACES);
   const [rsvpedAmas, setRsvpedAmas] = useState({});
 
   useEffect(() => {
