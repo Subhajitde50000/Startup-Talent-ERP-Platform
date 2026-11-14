@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import MentorPageShell from '../mentor-page-shell';
 import { initialAgreements, Btn, Card } from '../mentor-data';
+import { mentorFeatures } from '@/lib/mentor-features';
 
 export default function MentorAgreementsPage() {
   const [toast, setToast] = useState('');
@@ -29,6 +30,29 @@ export default function MentorAgreementsPage() {
       accounting advice. Confirm obligations with a qualified professional.
     </p>
   );
+
+  if (!mentorFeatures.agreements) {
+    return (
+      <MentorPageShell active="Dashboard" toast={toast} notify={notify}>
+        <div className="mx-auto max-w-2xl rounded-xl border border-[#E5E1D8] bg-white p-6 sm:p-8">
+          <p className="text-sm text-[#4A5568]">Mentor workspace</p>
+          <h1 className="serif mt-1 text-[30px] font-semibold text-[#0F1B2D]">
+            Agreements are temporarily unavailable
+          </h1>
+          <p className="mt-3 text-sm leading-6 text-[#4A5568]">
+            This feature has been stepped down while the mentorship workflow is being reviewed.
+            Existing agreement code and records are retained and can be re-enabled later.
+          </p>
+          <Link
+            href="/mentor/dashboard"
+            className="mt-5 inline-flex min-h-10 items-center rounded-lg bg-[#0F1B2D] px-4 text-sm font-semibold text-white hover:bg-[#1C2B42]"
+          >
+            Back to dashboard
+          </Link>
+        </div>
+      </MentorPageShell>
+    );
+  }
 
   return (
     <MentorPageShell active="Agreements" toast={toast} notify={notify}>

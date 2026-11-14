@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { mentorFeatures } from '@/lib/mentor-features';
 import {
   CalendarDays,
   MessageCircle,
@@ -453,12 +454,14 @@ export default function MentorshipWorkspacePage() {
           <Card title="Mentorship terms">
             <p className="text-xs text-[#0F1B2D]">Fortnightly · 45 minutes</p>
             <p className="mt-1 text-xs text-[#4A5568]">₹3,000 per session · No equity requested</p>
-            <Link
-              href="/mentor/agreements"
-              className="mt-3 inline-block text-xs font-semibold text-[#9A7A45]"
-            >
-              View agreement
-            </Link>
+            {mentorFeatures.agreements && (
+              <Link
+                href="/mentor/agreements"
+                className="mt-3 inline-block text-xs font-semibold text-[#9A7A45]"
+              >
+                View agreement
+              </Link>
+            )}
           </Card>
         </aside>
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { mentorFeatures } from '@/lib/mentor-features';
 import {
   Info,
   X,
@@ -231,9 +232,11 @@ export default function MentorSettingsPage() {
                   Availability
                 </Link>{' '}
                 ·{' '}
-                <Link href="/mentor/agreements" className="font-semibold text-[#0F1B2D] underline">
-                  Pricing and agreements
-                </Link>
+                {mentorFeatures.agreements && (
+                  <Link href="/mentor/agreements" className="font-semibold text-[#0F1B2D] underline">
+                    Pricing and agreements
+                  </Link>
+                )}
               </p>
             )}
 

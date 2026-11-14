@@ -24,6 +24,7 @@ import {
   Check,
   MessageSquare,
 } from 'lucide-react';
+import { mentorFeatures } from '@/lib/mentor-features';
 
 export const MENTOR_NAV_ITEMS = [
   ['Dashboard', LayoutDashboard, '/mentor/dashboard'],
@@ -119,7 +120,9 @@ export default function MentorSidebar({
           aria-label="Mentor primary navigation"
           className="mentor-sidebar-scrollbar mt-4 flex-1 space-y-1 overflow-y-auto px-3"
         >
-          {MENTOR_NAV_ITEMS.map(([label, IconComponent, href]) => {
+          {MENTOR_NAV_ITEMS
+            .filter(([label]) => label !== 'Agreements' || mentorFeatures.agreements)
+            .map(([label, IconComponent, href]) => {
             const isActive = currentActive === label;
             return (
               <Link
@@ -156,7 +159,7 @@ export default function MentorSidebar({
                 )}
               </Link>
             );
-          })}
+            })}
         </nav>
 
         {/* Compact Toggle Button */}
@@ -295,7 +298,9 @@ export default function MentorSidebar({
               aria-label="Mobile mentor navigation"
               className="mentor-sidebar-scrollbar flex-1 space-y-1 overflow-y-auto p-3"
             >
-              {MENTOR_NAV_ITEMS.map(([label, IconComponent, href]) => {
+              {MENTOR_NAV_ITEMS
+                .filter(([label]) => label !== 'Agreements' || mentorFeatures.agreements)
+                .map(([label, IconComponent, href]) => {
                 const isActive = currentActive === label;
                 return (
                   <Link
@@ -325,7 +330,7 @@ export default function MentorSidebar({
                     )}
                   </Link>
                 );
-              })}
+                })}
 
               <div className="my-3 border-t border-white/10" />
 
