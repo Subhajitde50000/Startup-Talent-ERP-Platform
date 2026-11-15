@@ -1,2 +1,4 @@
-import AuthScreen from '../AuthScreen';
-export default function Page(){return <AuthScreen page="login"/>}
+import LoginScreen from './LoginScreen';
+export default function Page() {
+  return <LoginScreen />;
+}
