@@ -30,7 +30,13 @@ Matches BUILD_PLAN.md v2 (step numbers are the same). For every step that has pa
 - [x] Account states (suspended and so on)
 - [x] Rate limiting and login attempts
 - [x] Self-registration cannot grant the admin role (admin auth is Step 15a)
-- [x] Auth tests pass (wrong role, expired, reused token, rate limit)
+- [x] Auth tests pass (wrong role, expired, reused token, rate limit, CSRF protection)
+- [x] Frontend auth pages wired (/login, /register, /register/role, /verify-email, /reset-password, /forgot-password)
+- [x] Shared API module with single-flight 401 refresh, in-memory token, and credentials: "include"
+- [x] RouteGuard enforcing role-based permissions and unauthenticated redirects
+- [x] OpenAPI client type generation via openapi-typescript
+- [x] Dev seed script (scripts/seed_dev.py) verified for development environment
+- [x] Multi-tab logout synchronization via BroadcastChannel
 
 ## Step 3: Profiles, organizations, onboarding
 - [ ] User profile and settings

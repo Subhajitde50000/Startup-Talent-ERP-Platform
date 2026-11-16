@@ -57,7 +57,11 @@ async def clean_database_and_redis(redis_client: aioredis.Redis) -> AsyncGenerat
 @pytest_asyncio.fixture
 async def client() -> AsyncGenerator[AsyncClient, None]:
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+    async with AsyncClient(
+        transport=transport,
+        base_url="http://localhost:3000",
+        headers={"Origin": "http://localhost:3000"},
+    ) as ac:
         yield ac
 
 

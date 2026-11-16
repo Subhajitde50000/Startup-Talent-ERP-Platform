@@ -552,3 +552,69 @@ async def test_require_role_authorization_forbidden(
     )
     assert resp.status_code == 403
     assert resp.json()["error"]["code"] == "forbidden"
+
+
+@pytest.mark.asyncio
+async def test_csrf_protection_disallowed_origin(
+    client: AsyncClient, verified_jobseeker_user: User
+) -> None:
+    # 1. Log in to acquire refresh token cookie
+    login_resp = await client.post(
+        "/api/v1/auth/login",
+        json={"email": "jobseeker@example.com", "password": "Password123!"},
+    )
+    assert login_resp.status_code == 200
+    assert "refresh_token" in login_resp.cookies
+
+    # 2. Attempt refresh with malicious Origin -> 403 Forbidden
+    evil_refresh = await client.post(
+        "/api/v1/auth/refresh",
+        headers={"Origin": "https://malicious-site.example"},
+    )
+    assert evil_refresh.status_code == 403
+    assert evil_refresh.json()["error"]["code"] == "forbidden"
+
+    # 3. Attempt logout with malicious Origin -> 403 Forbidden
+    evil_logout = await client.post(
+        "/api/v1/auth/logout",
+        headers={"Origin": "https://malicious-site.example"},
+    )
+    assert evil_logout.status_code == 403
+    assert evil_logout.json()["error"]["code"] == "forbidden"
+
+
+@pytest.mark.asyncio
+async def test_csrf_protection_allowed_origin_and_custom_header(
+    client: AsyncClient, verified_jobseeker_user: User
+) -> None:
+    # 1. Log in
+    login_resp = await client.post(
+        "/api/v1/auth/login",
+        json={"email": "jobseeker@example.com", "password": "Password123!"},
+    )
+    assert login_resp.status_code == 200
+
+    # 2. Refresh with allowed Origin (http://localhost:3000)
+    allowed_refresh = await client.post(
+        "/api/v1/auth/refresh",
+        headers={"Origin": "http://localhost:3000"},
+    )
+    assert allowed_refresh.status_code == 200
+    assert "access_token" in allowed_refresh.json()
+
+    # 3. Refresh with X-Requested-With header
+    header_refresh = await client.post(
+        "/api/v1/auth/refresh",
+        headers={"X-Requested-With": "XMLHttpRequest"},
+    )
+    assert header_refresh.status_code == 200
+    assert "access_token" in header_refresh.json()
+
+    # 4. Logout with allowed Origin
+    allowed_logout = await client.post(
+        "/api/v1/auth/logout",
+        headers={"Origin": "http://localhost:3000"},
+    )
+    assert allowed_logout.status_code == 200
+    assert allowed_logout.json()["message"] == "Logged out successfully."
+

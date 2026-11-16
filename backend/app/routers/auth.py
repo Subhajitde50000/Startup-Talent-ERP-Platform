@@ -3,7 +3,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Request, Response, stat
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings, get_settings
-from app.core.dependencies import get_current_user, get_redis
+from app.core.dependencies import get_current_user, get_redis, verify_csrf
 from app.core.rate_limit import check_email_lockout, check_ip_rate_limit
 from app.db.engine import get_db
 from app.models.user import User
@@ -110,6 +110,7 @@ async def login(
 @router.post(
     "/refresh",
     response_model=TokenResponse,
+    dependencies=[Depends(verify_csrf)],
     summary="Rotate refresh token and get a new access token",
 )
 async def refresh_token(
@@ -149,6 +150,7 @@ async def refresh_token(
 @router.post(
     "/logout",
     response_model=MessageResponse,
+    dependencies=[Depends(verify_csrf)],
     summary="Revoke current session",
 )
 async def logout(

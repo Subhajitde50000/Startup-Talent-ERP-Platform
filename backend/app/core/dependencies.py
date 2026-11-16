@@ -1,9 +1,10 @@
 import uuid
 from collections.abc import Callable
 from typing import Any
+from urllib.parse import urlparse
 
 import redis.asyncio as aioredis
-from fastapi import Depends
+from fastapi import Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -71,3 +72,39 @@ def require_role(*allowed_roles: UserRoleEnum) -> Callable[..., Any]:
         return current_user
 
     return role_checker
+
+
+async def verify_csrf(
+    request: Request,
+    settings: Settings = Depends(get_settings),
+) -> None:
+    """CSRF validation for cookie-authenticated requests.
+    Validates Origin or Referer against allowed CORS origins, or accepts X-Requested-With header.
+    """
+    if "refresh_token" in request.cookies:
+        # Check custom header first (defense-in-depth)
+        custom_header = request.headers.get("x-requested-with")
+        if custom_header and custom_header.lower() == "xmlhttprequest":
+            return
+
+        allowed = set(settings.cors_origins_list)
+        if settings.ENVIRONMENT == "test":
+            allowed.add("http://test")
+            allowed.add("http://testserver")
+
+        origin = request.headers.get("origin")
+        if origin:
+            if origin not in allowed:
+                raise AuthorizationError("CSRF check failed: Origin not allowed.")
+            return
+
+        referer = request.headers.get("referer")
+        if referer:
+            parsed = urlparse(referer)
+            referer_origin = f"{parsed.scheme}://{parsed.netloc}"
+            if referer_origin not in allowed:
+                raise AuthorizationError("CSRF check failed: Referer not allowed.")
+            return
+
+        raise AuthorizationError("CSRF check failed: Missing Origin or CSRF header.")
+
